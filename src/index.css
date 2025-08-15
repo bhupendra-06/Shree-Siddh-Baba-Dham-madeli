@@ -1,0 +1,197 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Navratri Temple Theme */
+    --background: 43 41% 97%;
+    --foreground: 15 20% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 15 20% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 15 20% 15%;
+
+    /* Saffron Primary */
+    --primary: 10 100% 60%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Temple Red Secondary */
+    --secondary: 0 84% 55%;
+    --secondary-foreground: 0 0% 100%;
+
+    /* Golden Accent */
+    --accent: 43 96% 56%;
+    --accent-foreground: 20 14% 15%;
+
+    --muted: 43 30% 95%;
+    --muted-foreground: 15 15% 45%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 43 20% 88%;
+    --input: 0 0% 100%;
+    --ring: 20 100% 60%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(20 100% 60%), hsl(43 96% 56%));
+    --gradient-secondary: linear-gradient(135deg, hsl(0 84% 55%), hsl(15 85% 50%));
+    --gradient-hero: linear-gradient(135deg, hsl(20 100% 60% / 0.9), hsl(0 84% 55% / 0.9));
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%), hsl(43 30% 98%));
+    
+    /* Temple Shadows */
+    --shadow-temple: 0 10px 30px -5px hsl(20 100% 60% / 0.3);
+    --shadow-diya: 0 0 20px hsl(43 96% 56% / 0.5);
+    --shadow-card: 0 4px 20px -2px hsl(20 50% 30% / 0.15);
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Dark theme for evening prayers */
+    --background: 15 25% 8%;
+    --foreground: 43 30% 90%;
+
+    --card: 15 25% 10%;
+    --card-foreground: 43 30% 90%;
+
+    --popover: 15 25% 10%;
+    --popover-foreground: 43 30% 90%;
+
+    --primary: 43 96% 65%;
+    --primary-foreground: 15 25% 8%;
+
+    --secondary: 0 84% 60%;
+    --secondary-foreground: 0 0% 100%;
+
+    --accent: 20 100% 65%;
+    --accent-foreground: 15 25% 8%;
+
+    --muted: 15 20% 15%;
+    --muted-foreground: 43 20% 65%;
+
+    --destructive: 0 62.8% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 15 20% 20%;
+    --input: 15 20% 15%;
+    --ring: 43 96% 65%;
+
+    /* Dark theme gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(43 96% 65%), hsl(20 100% 65%));
+    --gradient-secondary: linear-gradient(135deg, hsl(0 84% 60%), hsl(15 85% 55%));
+    --gradient-hero: linear-gradient(135deg, hsl(43 96% 65% / 0.9), hsl(0 84% 60% / 0.9));
+    --gradient-card: linear-gradient(135deg, hsl(15 25% 10%), hsl(15 20% 12%));
+    
+    --shadow-temple: 0 10px 30px -5px hsl(43 96% 65% / 0.4);
+    --shadow-diya: 0 0 25px hsl(43 96% 65% / 0.6);
+    --shadow-card: 0 4px 20px -2px hsl(0 0% 0% / 0.3);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  /* Temple-specific utilities */
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+  
+  .gradient-secondary {
+    background: var(--gradient-secondary);
+  }
+  
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+  
+  .gradient-card {
+    background: var(--gradient-card);
+  }
+  
+  .shadow-temple {
+    box-shadow: var(--shadow-temple);
+  }
+  
+  .shadow-diya {
+    box-shadow: var(--shadow-diya);
+  }
+  
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Animations */
+  .diya-glow {
+    animation: diya-glow 2s ease-in-out infinite alternate;
+  }
+  
+  @keyframes diya-glow {
+    from {
+      filter: drop-shadow(0 0 5px hsl(var(--accent)));
+    }
+    to {
+      filter: drop-shadow(0 0 20px hsl(var(--accent))) drop-shadow(0 0 30px hsl(var(--primary)));
+    }
+  }
+  
+  .temple-float {
+    animation: temple-float 6s ease-in-out infinite;
+  }
+  
+  @keyframes temple-float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* Enhanced hover effects */
+  .hover-lift {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-temple);
+  }
+
+  /* Smooth scrolling for anchor links */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Mobile responsive typography */
+  @media (max-width: 768px) {
+    .font-display {
+      line-height: 1.2;
+    }
+  }
+}
