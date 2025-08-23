@@ -14,7 +14,7 @@ const Index = () => {
       <QuickAbout />
       <HighlightCards />
       <MembersCarousel />
-      <CommunityCarousel />
+      {/* <CommunityCarousel /> */}
       <Footer />
     </div>
   );

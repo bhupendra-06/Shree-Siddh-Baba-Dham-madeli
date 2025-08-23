@@ -94,7 +94,10 @@ export default function MembersCarousel() {
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
-  const scrollTo = useCallback((index: number) => emblaApi?.scrollTo(index), [emblaApi]);
+  const scrollTo = useCallback(
+    (index: number) => emblaApi?.scrollTo(index),
+    [emblaApi]
+  );
 
   return (
     <div className="relative px-4 sm:px-20 py-10 bg-blue-50">
@@ -118,7 +121,9 @@ export default function MembersCarousel() {
                 <h3 className="text-lg mt-4 font-semibold text-center">
                   {member.name}
                 </h3>
-                <p className="text-center text-gray-700">{member.qualification}</p>
+                <p className="text-center text-gray-700">
+                  {member.qualification}
+                </p>
                 <div className="mt-2 text-center px-3 py-1 rounded bg-white text-sm text-gray-600">
                   {member.experience}
                 </div>
@@ -126,24 +131,23 @@ export default function MembersCarousel() {
             </div>
           ))}
         </div>
+
+        {/* Arrows */}
+        <button
+          onClick={scrollPrev}
+          aria-label="Previous"
+          className="absolute left-2 top-1/2 bg-white p-2 rounded-full shadow hover:bg-gray-100"
+        >
+          ◀
+        </button>
+        <button
+          onClick={scrollNext}
+          aria-label="Next"
+          className="absolute right-2 top-1/2 bg-white p-2 rounded-full shadow hover:bg-gray-100"
+        >
+          ▶
+        </button>
       </div>
-
-      {/* Arrows */}
-      <button
-        onClick={scrollPrev}
-        aria-label="Previous"
-        className="absolute left-2 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-gray-100"
-      >
-        ◀
-      </button>
-      <button
-        onClick={scrollNext}
-        aria-label="Next"
-        className="absolute right-2 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-gray-100"
-      >
-        ▶
-      </button>
-
     </div>
   );
 }
