@@ -3,40 +3,40 @@ import useEmblaCarousel from "embla-carousel-react";
 
 interface Member {
   name: string;
-  qualification: string;
-  experience: string;
+  position: string;
+  mobile: string;
   image: string;
 }
 
 const members: Member[] = [
   {
     name: "Mohan Thakur",
-    qualification: "Adyaksh",
-    experience: "📞 7804827109",
+    position: "Adhyaksh",
+    mobile: "7804827109",
     image: "https://randomuser.me/api/portraits/men/32.jpg",
   },
   {
     name: "Purushottam Netam",
-    qualification: "Sachiv",
-    experience: "📞 9098412384",
+    position: "Sachiv",
+    mobile: "9098412384",
     image: "https://randomuser.me/api/portraits/men/33.jpg",
   },
   {
-    name: "Tejram Sahu",
-    qualification: "Upadhyaksh",
-    experience: "📞 6268678377",
+    name: "Tej Ram Sahu",
+    position: "Upadhyaksh",
+    mobile: "6268678377",
     image: "https://randomuser.me/api/portraits/men/34.jpg",
   },
   {
     name: "Hitesh Patel",
-    qualification: "Koshadhyaksh",
-    experience: "📞 6265644983",
+    position: "Koshadhyaksh",
+    mobile: "6265644983",
     image: "https://randomuser.me/api/portraits/men/35.jpg",
   },
   {
     name: "Purushottam Kansari",
-    qualification: "Sahsachiv",
-    experience: "📞 (not provided)",
+    position: "Sahsachiv",
+    mobile: "",
     image: "https://randomuser.me/api/portraits/men/36.jpg",
   },
 ];
@@ -44,7 +44,6 @@ const members: Member[] = [
 export default function MembersCarousel() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" });
 
-  // Pagination (dots)
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
   useEffect(() => {
@@ -58,10 +57,9 @@ export default function MembersCarousel() {
     };
   }, [emblaApi]);
 
-  // Manual autoplay (no plugin): 3s, pause on hover & user interaction
+  // Autoplay
   useEffect(() => {
     if (!emblaApi) return;
-
     let timer: ReturnType<typeof setInterval> | null = null;
     const start = () => {
       if (timer) return;
@@ -72,18 +70,12 @@ export default function MembersCarousel() {
       clearInterval(timer);
       timer = null;
     };
-
-    // Pause on user drag/touch
     const onPointerDown = () => stop();
     emblaApi.on("pointerDown", onPointerDown);
-
-    // Pause on hover
     const root = emblaApi.rootNode();
     root.addEventListener("mouseenter", stop);
     root.addEventListener("mouseleave", start);
-
     start();
-
     return () => {
       stop();
       emblaApi.off("pointerDown", onPointerDown);
@@ -121,12 +113,27 @@ export default function MembersCarousel() {
                 <h3 className="text-lg mt-4 font-semibold text-center">
                   {member.name}
                 </h3>
-                <p className="text-center text-gray-700">
-                  {member.qualification}
+
+                {/* Position styled */}
+                <p className="m-auto w-fit text-center mt-1 text-sm font-bold text-white bg-gradient-to-r from-orange-500 to-red-500 px-3 py-1 rounded-full">
+                  {member.position}
                 </p>
-                <div className="mt-2 text-center px-3 py-1 rounded bg-white text-sm text-gray-600">
-                  {member.experience}
-                </div>
+
+                {/* Mobile clickable */}
+                {member.mobile ? (
+                  <div className="mt-3 text-center">
+                    <a
+                      href={`tel:${member.mobile}`}
+                      className="px-3 py-1 rounded bg-white text-sm text-blue-700 font-medium shadow hover:bg-blue-100"
+                    >
+                      📞 {member.mobile}
+                    </a>
+                  </div>
+                ) : (
+                  <p className="mt-3 text-center text-sm text-gray-500">
+                    📞 Not Provided
+                  </p>
+                )}
               </div>
             </div>
           ))}
