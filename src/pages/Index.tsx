@@ -5,6 +5,7 @@ import { HighlightCards } from "@/components/HighlightCards";
 import MembersCarousel from "@/components/MembersCarousel";
 import { CommunityCarousel } from "@/components/CommunityCarousel";
 import { Footer } from "@/components/Footer";
+import GoogleMapComponent from "@/components/GoogleMapComponent";
 
 const Index = () => {
   return (
@@ -15,6 +16,7 @@ const Index = () => {
       <HighlightCards />
       <MembersCarousel />
       {/* <CommunityCarousel /> */}
+      <GoogleMapComponent />
       <Footer />
     </div>
   );

@@ -118,7 +118,7 @@ export const Footer = () => {
                 <p className="text-sm text-muted-foreground mb-3">
                   Scan to donate via UPI
                 </p>
-                <p className="text-xs text-accent font-medium">temple@upi</p>
+                <p className="text-xs text-accent font-medium">7804827109@ybl</p>
               </div>
             </Card>
             <Link to="/donations">
