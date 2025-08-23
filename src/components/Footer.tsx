@@ -71,7 +71,7 @@ export const Footer = () => {
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-primary" />
-                <p className="text-sm text-muted-foreground">shreesiddhababaDham Madelimadeli@gmail.com</p>
+                <p className="text-sm text-muted-foreground">shreesiddhababamadeli@gmail.com</p>
               </div>
             </div>
           </div>
