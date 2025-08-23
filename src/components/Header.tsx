@@ -27,7 +27,7 @@ export const Header = () => {
             </div>
             <div>
               <h1 className="font-display font-bold text-lg text-foreground">
-                Shree Siddh Baba Dham
+                श्री सिद्ध बाबा धाम
               </h1>
               <p className="text-xs text-muted-foreground">Sacred Temple, Madeli</p>
             </div>

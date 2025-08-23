@@ -36,7 +36,7 @@ const members: Member[] = [
   {
     name: "Purushottam Kansari",
     position: "Sahsachiv",
-    mobile: "",
+    mobile: "XXXXXXXXXX",
     image: "https://randomuser.me/api/portraits/men/36.jpg",
   },
 ];

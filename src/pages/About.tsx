@@ -42,11 +42,11 @@ const About = () => {
           <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
             <div>
               <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-6">
-                Our Sacred History
+                History
               </h2>
               <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
                 <p>
-                  बहुत पुरानी बात है। इसी पावन स्थान पर भी सिद्ध बाबा जी रहा
+                  बहुत पुरानी बात है। इसी पावन स्थान पर श्री सिद्ध बाबा जी रहा
                   करते थे। कहा जाता है कि बाबा जी ने यहीं बैठकर वर्षों तक कठोर
                   तप किया और अपना संपूर्ण जीवन ईश्वर की भक्ति में लगा दिया।
                   अंततः इसी धरती पर उन्होंने समाधि ली। तभी से यह स्थान भक्तों के

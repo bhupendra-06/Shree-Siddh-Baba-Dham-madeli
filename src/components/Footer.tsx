@@ -1,16 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { 
-  Flame, 
-  MapPin, 
-  Phone, 
-  Mail, 
-  Facebook, 
-  Instagram, 
+import {
+  Flame,
+  MapPin,
+  Phone,
+  Mail,
+  Facebook,
+  Instagram,
   Youtube,
   QrCode,
-  Heart
+  Heart,
 } from "lucide-react";
 
 export const Footer = () => {
@@ -27,24 +27,36 @@ export const Footer = () => {
               </div>
               <div>
                 <h3 className="font-display font-bold text-2xl text-foreground">
-                  Shree Siddh Baba Dham Madeli
+                  श्री सिद्ध बाबा धाम
                 </h3>
-                <p className="text-muted-foreground">Sacred Temple, Madeli</p>
+                <p className="text-muted-foreground">पावन मंदिर, मडेली</p>
               </div>
             </div>
             <p className="text-muted-foreground leading-relaxed mb-6">
-              Experience the divine blessings of Navratri at our sacred temple. 
-              For over 50 years, we have been lighting the path of devotion and 
-              bringing communities together in prayer and celebration.
+              नवरात्रि के शुभ अवसर पर आइए, दिव्य आशीर्वाद का अनुभव कीजिए। पिछले
+              20 वर्षों से हम भक्ति की राह को आलोकित कर रहे हैं और समाज को
+              प्रार्थना व उत्सव में जोड़ रहे हैं।
             </p>
             <div className="flex gap-4">
-              <Button variant="outline" size="icon" className="hover:bg-primary hover:text-white transition-all duration-300">
+              <Button
+                variant="outline"
+                size="icon"
+                className="hover:bg-primary hover:text-white transition-all duration-300"
+              >
                 <Facebook className="h-4 w-4" />
               </Button>
-              <Button variant="outline" size="icon" className="hover:bg-primary hover:text-white transition-all duration-300">
+              <Button
+                variant="outline"
+                size="icon"
+                className="hover:bg-primary hover:text-white transition-all duration-300"
+              >
                 <Instagram className="h-4 w-4" />
               </Button>
-              <Button variant="outline" size="icon" className="hover:bg-primary hover:text-white transition-all duration-300">
+              <Button
+                variant="outline"
+                size="icon"
+                className="hover:bg-primary hover:text-white transition-all duration-300"
+              >
                 <Youtube className="h-4 w-4" />
               </Button>
             </div>
@@ -53,25 +65,44 @@ export const Footer = () => {
           {/* Contact Info */}
           <div>
             <h4 className="font-display font-semibold text-lg text-foreground mb-4">
-              Contact Us
+              संपर्क करें
             </h4>
             <div className="space-y-3">
               <div className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-primary mt-0.5" />
                 <div>
                   <p className="text-sm text-muted-foreground">
-                    Shree Siddh Baba Dham Madeli Temple<br />
-                    Madeli, Gariaband - 493889, Chhattisgarh
+                  श्री सिद्ध बाबा धाम
+                    <br />
+                    मडेली, गरियाबंद, छत्तीसगढ़ (493889)
                   </p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-primary" />
-                <p className="text-sm text-muted-foreground">+91 78048 27109</p>
+
+                <a
+                  href="tel:8839117716"
+                  className="text-sm text-muted-foreground"
+                >
+                  +91 88391 17716
+                </a>
+              </div>
+              <div className="flex items-center gap-3">
+                <Phone className="h-5 w-5 text-primary" />
+
+                <a
+                  href="tel:9009610596"
+                  className="text-sm text-muted-foreground"
+                >
+                  +91 90096 10596
+                </a>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-primary" />
-                <p className="text-sm text-muted-foreground">shreesiddhababamadeli@gmail.com</p>
+                <p className="text-sm text-muted-foreground">
+                  shreesiddhababamadeli@gmail.com
+                </p>
               </div>
             </div>
           </div>
@@ -87,13 +118,14 @@ export const Footer = () => {
                 <p className="text-sm text-muted-foreground mb-3">
                   Scan to donate via UPI
                 </p>
-                <p className="text-xs text-accent font-medium">
-                  temple@upi
-                </p>
+                <p className="text-xs text-accent font-medium">temple@upi</p>
               </div>
             </Card>
             <Link to="/donations">
-              <Button variant="diya" className="w-full mt-4 hover:scale-105 transition-transform duration-300">
+              <Button
+                variant="diya"
+                className="w-full mt-4 hover:scale-105 transition-transform duration-300"
+              >
                 <Heart className="h-4 w-4" />
                 Donate Now
               </Button>
@@ -101,13 +133,18 @@ export const Footer = () => {
           </div>
         </div>
 
-
         {/* Bottom Footer */}
         <div className="border-t border-border pt-6 text-center">
           <p className="text-sm text-muted-foreground mb-2">
-            ©{new Date().getFullYear()} Shree Siddh Baba Dham Madeli. All rights reserved. | 
-            <a href="#" className="hover:text-primary transition-colors ml-1">Privacy Policy</a> | 
-            <a href="#" className="hover:text-primary transition-colors ml-1">Terms of Service</a>
+            ©{new Date().getFullYear()} Shree Siddh Baba Dham Madeli. All rights
+            reserved. |
+            <a href="/" className="hover:text-primary transition-colors ml-1">
+              Privacy Policy
+            </a>
+            |
+            <a href="/" className="hover:text-primary transition-colors ml-1">
+              Terms of Service
+            </a>
           </p>
           <p className="text-xs text-muted-foreground">
             Made with ❤️ for our devotee community

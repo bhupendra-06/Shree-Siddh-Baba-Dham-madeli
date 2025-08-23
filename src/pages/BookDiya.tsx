@@ -86,7 +86,7 @@ const BookDiya = () => {
             {diyaPackages.map((pkg, index) => (
               <Card
                 key={index}
-                className="relative p-8 text-center rounded-2xl border bg-white border-gray-200 shadow-sm transition-all duration-500 hover:scale-105 hover:shadow-xl"
+                className="relative p-8 text-center rounded-2xl border-2 border-secondary/10 bg-white shadow-sm transition-all duration-500 hover:scale-105 hover:shadow-xl"
               >
                 {/* Package Name */}
                 <h3 className="font-display text-2xl font-bold mb-4 text-gray-800">
@@ -116,7 +116,7 @@ const BookDiya = () => {
       </section>
 
       {/* Booking Form */}
-      <section id="book-your-diya" className="py-20 bg-muted/30">
+      <section id="book-your-diya" className="py-10 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             <Card className="p-8 md:p-12 bg-gradient-card border-0 shadow-temple">
