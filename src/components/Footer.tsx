@@ -15,7 +15,7 @@ import {
 
 export const Footer = () => {
   return (
-    <footer className="bg-gradient-to-b from-muted/30 to-muted/60 pt-20 pb-8">
+    <footer className="bg-gradient-to-b from-muted/30 to-muted/60 pt-10 pb-8">
       <div className="container mx-auto px-4">
         {/* Main Footer Content */}
         <div className="grid md:grid-cols-4 gap-8 mb-12">
@@ -67,7 +67,7 @@ export const Footer = () => {
             <h4 className="font-display font-semibold text-lg text-foreground mb-4">
               संपर्क करें
             </h4>
-            <div className="space-y-3">
+            <div className="space-y-3 ">
               <div className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-primary mt-0.5" />
                 <div>
@@ -101,7 +101,7 @@ export const Footer = () => {
               <div className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-primary" />
                 <p className="text-sm text-muted-foreground">
-                  shreesiddhababamadeli@gmail.com
+                  shreesiddhababadhammadeli@gmail.com
                 </p>
               </div>
             </div>

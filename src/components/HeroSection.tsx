@@ -22,7 +22,7 @@ export const HeroSection = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 text-center text-white">
+      <div className="relative z-10 container mx-auto p-4 md:p-20 text-center text-white">
         <div className="max-w-4xl mx-auto animate-fade-in-up">
           {/* Temple Icon */}
           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-6 py-3 mb-6">
@@ -87,7 +87,7 @@ export const HeroSection = () => {
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-accent mb-2">10K+</div>
-              <div className="text-white/80">भक्तगण</div>
+              <div className="text-white/80">श्रद्धालु</div>
             </div>
           </div>
         </div>

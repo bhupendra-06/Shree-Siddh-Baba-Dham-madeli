@@ -155,6 +155,7 @@ export default function MembersCarousel() {
           ▶
         </button>
       </div>
+      
     </div>
   );
 }

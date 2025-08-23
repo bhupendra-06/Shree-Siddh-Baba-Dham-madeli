@@ -7,12 +7,10 @@ export const QuickAbout = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-6">
-            About Siddh Baba Dham Madeli
+            मंदिर का इतिहास
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            For over five decades, Siddh Baba Dham Madeli has been a beacon of spiritual light, 
-            where devotees gather to celebrate the divine festival of Navratri. Our sacred 
-            diya lighting ritual brings together thousands of faithful hearts in prayer and devotion.
+            पिछले कई वर्षों से श्री सिद्ध बाबा धाम मडेली आस्था और भक्ति का दीपस्तंभ रहा है। यहाँ श्रद्धालु एकत्रित होकर नवरात्रि का पावन उत्सव मनाते हैं। विशेष दीप प्रज्वलन की यह परंपरा हजारों हृदयों को भक्ति और प्रार्थना में जोड़ती है।
           </p>
         </div>
       </div>

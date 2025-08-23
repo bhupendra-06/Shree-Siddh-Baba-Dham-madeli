@@ -69,14 +69,10 @@ const DevoteeList = () => {
               <MapPin className="h-3 w-3" />
               {devotee.city}
             </div>
-            <div className="flex items-center gap-1">
-              <Crown className="h-3 w-3" />
-              {devotee.gotra}
-            </div>
           </div>
         </div>
         <div className="text-right">
-          <div className="text-xs text-muted-foreground">Diya #{devotee.diyaNumber}</div>
+          <div className="text-xl text-muted-foreground">Diya No. {devotee.diyaNumber}</div>
         </div>
       </div>
     </Card>
