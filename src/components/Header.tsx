@@ -26,7 +26,7 @@ export const Header = () => {
               <Flame className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h1 className="font-display font-bold text-lg text-foreground">
+              <h1 className="rozha-one-regular font-display font-bold text-lg text-foreground">
                 श्री सिद्ध बाबा धाम
               </h1>
               <p className="text-xs text-muted-foreground">पावन मंदिर, मडेली</p>

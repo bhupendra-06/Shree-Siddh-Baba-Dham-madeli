@@ -26,7 +26,7 @@ export const Footer = () => {
                 <Flame className="h-8 w-8 text-white" />
               </div>
               <div>
-                <h3 className="font-display font-bold text-2xl text-foreground">
+                <h3 className="rozha-one-regular font-display font-bold text-2xl text-foreground">
                   श्री सिद्ध बाबा धाम
                 </h3>
                 <p className="text-muted-foreground">पावन मंदिर, मडेली</p>

@@ -42,7 +42,7 @@ export const CountdownTimer = ({ targetDate, className = "" }: CountdownTimerPro
               {value.toString().padStart(2, '0')}
             </span>
           </div>
-          <span className="text-sm text-muted-foreground mt-1 capitalize font-medium">
+          <span className="text-sm text-muted-foreground mt-1 text-gray-200 capitalize font-medium">
             {unit}
           </span>
         </div>
