@@ -98,6 +98,15 @@ export const Footer = () => {
                   +91 90096 10596
                 </a>
               </div>
+              <div className="flex items-start gap-3">
+                <Mail className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+                <a
+                  href="mailto:shreesiddhababadhammadeli@gmail.com"
+                  className="text-sm text-muted-foreground break-all leading-snug"
+                >
+                  shreesiddhababadhammadeli@gmail.com
+                </a>
+              </div>
               <div className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-primary" />
                 <p className="text-sm text-muted-foreground">
