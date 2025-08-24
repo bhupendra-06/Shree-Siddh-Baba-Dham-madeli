@@ -245,59 +245,6 @@ const Gallery = () => {
           </div>
 
           <Tabs defaultValue="videos" className="w-full">
-            <div className="flex justify-center mb-12">
-              <TabsList className="grid w-full max-w-md grid-cols-2 bg-muted/50">
-                <TabsTrigger value="videos" className="font-medium">Videos</TabsTrigger>
-                <TabsTrigger value="highlights" className="font-medium">Highlights</TabsTrigger>
-              </TabsList>
-            </div>
-
-            <TabsContent value="videos" className="space-y-8">
-              <div className="text-center mb-8">
-                <h2 className="font-display text-2xl font-bold text-foreground mb-2">
-                  Sacred Video Moments
-                </h2>
-                <p className="text-muted-foreground">
-                  Experience the divine energy through our video collection
-                </p>
-              </div>
-              
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {videos.map((video, index) => (
-                  <Card
-                    key={index}
-                    className="group relative overflow-hidden rounded-xl shadow-card hover:shadow-temple transition-all duration-300 cursor-pointer hover:scale-105"
-                  >
-                    <div className="aspect-video relative">
-                      <img
-                        src={video.thumbnail}
-                        alt={video.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:bg-white/30 transition-colors">
-                          <Play className="h-8 w-8 text-white ml-1" />
-                        </div>
-                      </div>
-                      
-                      <div className="absolute bottom-0 left-0 right-0 p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                        <h3 className="font-semibold text-white mb-1 text-sm">{video.title}</h3>
-                        <div className="flex items-center justify-between text-white/80 text-xs">
-                          <div className="flex items-center gap-1">
-                            <Play className="h-3 w-3" />
-                            {video.duration}
-                          </div>
-                          <div>{video.views} views</div>
-                        </div>
-                      </div>
-                    </div>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
-
             <TabsContent value="highlights" className="space-y-8">
               <div className="text-center mb-8">
                 <h2 className="font-display text-2xl font-bold text-foreground mb-2">

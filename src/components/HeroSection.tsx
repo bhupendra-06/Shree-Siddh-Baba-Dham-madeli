@@ -31,7 +31,7 @@ export const HeroSection = () => {
           </div>
 
           {/* Main Heading */}
-          <h1 className="rozha-one-regular text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+          <h1 className="rozha-one-regular text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
             श्री सिद्ध बाबा 
             <span className="block text-accent diya-glow">पावन धाम, मडेली</span>
           </h1>
