@@ -10,7 +10,7 @@ export const CountdownTimer = ({ targetDate, className = "" }: CountdownTimerPro
     days: 0,
     hours: 0,
     minutes: 0,
-    seconds: 0
+    sec: 0
   });
 
   useEffect(() => {
@@ -23,10 +23,10 @@ export const CountdownTimer = ({ targetDate, className = "" }: CountdownTimerPro
           days: Math.floor(distance / (1000 * 60 * 60 * 24)),
           hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
           minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds: Math.floor((distance % (1000 * 60)) / 1000)
+          sec: Math.floor((distance % (1000 * 60)) / 1000)
         });
       } else {
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, sec: 0 });
       }
     }, 1000);
 
@@ -42,7 +42,7 @@ export const CountdownTimer = ({ targetDate, className = "" }: CountdownTimerPro
               {value.toString().padStart(2, '0')}
             </span>
           </div>
-          <span className="text-sm text-muted-foreground mt-1 text-gray-200 capitalize font-medium">
+          <span className="text-sm text-muted-foreground mt-1 text-gray-100 capitalize font-medium">
             {unit}
           </span>
         </div>

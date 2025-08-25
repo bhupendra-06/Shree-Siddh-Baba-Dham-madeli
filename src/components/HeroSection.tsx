@@ -25,15 +25,16 @@ export const HeroSection = () => {
       <div className="relative z-10 container mx-auto p-4 md:p-20 text-center text-white">
         <div className="max-w-4xl mx-auto animate-fade-in-up">
           {/* Temple Icon */}
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-6 py-3 mb-6">
+          {/* <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-6 py-3 mb-6">
             <Flame className="h-5 w-5 text-accent diya-glow" />
             <span className="font-medium">Sacred Navratri Diya Lighting</span>
-          </div>
+          </div> */}
 
           {/* Main Heading */}
           <h1 className="rozha-one-regular text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-            श्री सिद्ध बाबा 
-            <span className="block text-accent diya-glow">पावन धाम, मडेली</span>
+            <span className="block">श्री</span>
+            <span className="block">सिद्ध बाबा धाम</span>
+            <span className="block text-accent diya-glow">मडेली</span>
           </h1>
 
 

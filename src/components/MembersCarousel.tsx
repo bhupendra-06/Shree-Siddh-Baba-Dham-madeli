@@ -92,7 +92,7 @@ export default function MembersCarousel() {
   );
 
   return (
-    <div className="relative px-4 sm:px-20 py-10 bg-blue-50">
+    <div className="relative px-4 sm:px-20 py-10 my-6 bg-blue-50">
       <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">
         Our <span className="text-orange-600">Members</span>
       </h2>

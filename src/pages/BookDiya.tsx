@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Flame, Shield } from "lucide-react";
 import { useState } from "react";
 import diyaLight from "@/assets/diya-light.jpg";
+import CTA from "@/components/CTA";
 
 const BookDiya = () => {
   const [formData, setFormData] = useState({
@@ -234,7 +235,7 @@ const BookDiya = () => {
           </div>
         </div>
       </section>
-
+      <CTA />
       <Footer />
     </div>
   );

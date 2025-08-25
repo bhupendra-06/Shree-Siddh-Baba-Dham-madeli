@@ -6,6 +6,7 @@ import MembersCarousel from "@/components/MembersCarousel";
 import { CommunityCarousel } from "@/components/CommunityCarousel";
 import { Footer } from "@/components/Footer";
 import GoogleMapComponent from "@/components/GoogleMapComponent";
+import CTA from "@/components/CTA";
 
 const Index = () => {
   return (
@@ -16,6 +17,7 @@ const Index = () => {
       <HighlightCards />
       <MembersCarousel />
       {/* <CommunityCarousel /> */}
+      <CTA />
       <GoogleMapComponent />
       <Footer />
     </div>

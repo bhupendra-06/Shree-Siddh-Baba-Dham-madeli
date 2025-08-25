@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Flame, Calendar, Users, Heart } from "lucide-react";
 import templeHero from "@/assets/temple-hero.jpg";
 import diyaRows from "@/assets/diya-rows.jpg";
+import CTA from "@/components/CTA";
 
 const About = () => {
   return (
@@ -37,9 +38,9 @@ const About = () => {
       </section>
 
       {/* Main Content */}
-      <section className="py-20">
+      <section className="py-10">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
+          <div className="grid lg:grid-cols-2 gap-16 items-center mb-10">
             <div>
               <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-6">
                 History
@@ -120,7 +121,7 @@ const About = () => {
           </div>
         </div>
       </section>
-
+      <CTA />
       <Footer />
     </div>
   );

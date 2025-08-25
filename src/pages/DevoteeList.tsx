@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Search, Users, MapPin, Phone } from "lucide-react";
 import { useState } from "react";
+import CTA from "@/components/CTA";
 
 // Example data
 const devotees = [
@@ -151,7 +152,7 @@ const DevoteeList = () => {
           </Tabs>
         </div>
       </section>
-
+      <CTA />
       <Footer />
     </div>
   );
