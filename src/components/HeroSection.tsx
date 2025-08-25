@@ -32,9 +32,9 @@ export const HeroSection = () => {
 
           {/* Main Heading */}
           <h1 className="rozha-one-regular text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-            <span className="block">श्री</span>
-            <span className="block">सिद्ध बाबा धाम</span>
-            <span className="block text-accent diya-glow">मडेली</span>
+
+            श्री सिद्ध बाबा 
+            <span className="block text-accent text-yellow-300 ">पावन धाम, मडेली</span>
           </h1>
 
 
