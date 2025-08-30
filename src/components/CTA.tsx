@@ -14,9 +14,8 @@ export default function CTA() {
         </p>
         <Link to={"/book-diya"}>
           <Button
-            variant="outline"
             size="lg"
-            className="border-white/30 text-white hover:bg-white/10"
+            className="bg-white text-orange-600 font-semibold hover:bg-orange-100 hover:scale-105 transition"
           >
             Book Your Diya Now
           </Button>
