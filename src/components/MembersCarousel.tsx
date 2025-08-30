@@ -14,7 +14,7 @@ const members: Member[] = [
     name: "Mohan Thakur",
     position: "Adhyaksh",
     mobile: "7804827109",
-    // image: "https://randomuser.me/api/portraits/men/32.jpg",
+    image: noUser,
   },
   {
     name: "Purushottam Netam",

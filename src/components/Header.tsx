@@ -29,7 +29,7 @@ export const Header = () => {
               <h1 className="rozha-one-regular font-display font-bold text-lg text-foreground">
                 श्री सिद्ध बाबा धाम
               </h1>
-              <p className="text-xs text-muted-foreground">पावन मंदिर, मडेली</p>
+              <p className="text-xs text-muted-foreground">पावन मंदिर, मड़ेली</p>
             </div>
           </Link>
 
