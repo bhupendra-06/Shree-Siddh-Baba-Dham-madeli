@@ -58,6 +58,11 @@ export const Header = () => {
                 Book Your Diya
               </Button>
             </Link>
+            <Link to="/login">
+              <Button size="lg" className="hover:scale-105 bg-teal-500 hover:bg-teal-700 ml-2 transition-transform duration-300">
+                Login
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -90,6 +95,11 @@ export const Header = () => {
                   Book Your Diya
                 </Button>
               </Link>
+              <Link to="/login">
+              <Button size="lg" className="hover:scale-105 bg-teal-400 hover:bg-teal-700 w-full transition-transform duration-300">
+                Login
+              </Button>
+            </Link>
             </nav>
           </div>
         )}
