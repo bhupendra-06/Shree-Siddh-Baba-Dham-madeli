@@ -4,7 +4,13 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Search, Users, MapPin, Flame } from "lucide-react"; // 🔥 replaced Phone with Flame for diya
 import { useEffect, useState } from "react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import CTA from "@/components/CTA";
 
 interface Devotee {
@@ -17,13 +23,12 @@ interface Devotee {
   paymentStatus: string;
 }
 
-const getSeason = ()=> {
+const getSeason = () => {
   const month = new Date().getMonth() + 1;
 
-  if(month >= 3 && month <= 5) return "CHAITRA";
-  if(month >= 9 && month <= 11) return "SHARDIYA";
+  if (month >= 3 && month <= 5) return "CHAITRA";
+  if (month >= 9 && month <= 11) return "SHARDIYA";
   return "SHARDIYA"; // Default value if not in range
-
 };
 
 const DevoteeList = () => {
@@ -38,7 +43,9 @@ const DevoteeList = () => {
   useEffect(() => {
     const fetchDevotees = async () => {
       try {
-        const res = await fetch("https://siddhbabatemplebackend.onrender.com/api/bookings");
+        const res = await fetch(
+          "https://siddhbabatemplebackend.onrender.com/api/bookings"
+        );
         const data = await res.json();
         if (Array.isArray(data)) {
           setDevotees(data);
@@ -66,7 +73,28 @@ const DevoteeList = () => {
     );
   };
 
-  const DevoteeCard = ({ devotee, index }: { devotee: Devotee; index: number }) => (
+  // Year + Season filter
+  const filterByYearAndSeason = devotees.filter(
+    (devotee) =>
+      devotee.year === selectedYear &&
+      devotee.season.toLowerCase() === selectedSeason.toLowerCase()
+  );
+
+  // Apply Search only on filtered list
+  const searchedDevotees = filterByYearAndSeason.filter(
+    (devotee) =>
+      devotee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      devotee.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      devotee.whatsappNumber.includes(searchTerm)
+  );
+
+  const DevoteeCard = ({
+    devotee,
+    index,
+  }: {
+    devotee: Devotee;
+    index: number;
+  }) => (
     <Card className="p-6 bg-gradient-card border-0 shadow-card hover:shadow-temple transition-all duration-300 group hover:scale-105">
       <div className="flex items-center gap-4">
         <div className="flex-shrink-0">
@@ -92,7 +120,9 @@ const DevoteeList = () => {
             Status:{" "}
             <span
               className={`${
-                devotee.paymentStatus === "PAID" ? "text-green-600" : "text-red-600"
+                devotee.paymentStatus === "PAID"
+                  ? "text-green-600"
+                  : "text-red-600"
               } font-medium`}
             >
               {devotee.paymentStatus}
@@ -120,7 +150,8 @@ const DevoteeList = () => {
           </h1>
 
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            Explore the blessed community of devotees who have lit their diyas at our sacred temple
+            Explore the blessed community of devotees who have lit their diyas
+            at our sacred temple
           </p>
 
           {/* Search Bar */}
@@ -139,7 +170,10 @@ const DevoteeList = () => {
 
           {/* Filters (Mobile friendly dropdowns) */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Select value={selectedYear.toString()} onValueChange={(val) => setSelectedYear(Number(val))}>
+            <Select
+              value={selectedYear.toString()}
+              onValueChange={(val) => setSelectedYear(Number(val))}
+            >
               <SelectTrigger className="w-full sm:w-40 bg-white">
                 <SelectValue placeholder="Select Year" />
               </SelectTrigger>
@@ -149,7 +183,10 @@ const DevoteeList = () => {
               </SelectContent>
             </Select>
 
-            <Select value={selectedSeason} onValueChange={(val) => setSelectedSeason(val)}>
+            <Select
+              value={selectedSeason}
+              onValueChange={(val) => setSelectedSeason(val)}
+            >
               <SelectTrigger className="w-full sm:w-40 bg-white">
                 <SelectValue placeholder="Select Season" />
               </SelectTrigger>
@@ -166,19 +203,25 @@ const DevoteeList = () => {
       <section className="py-20">
         <div className="container mx-auto px-4">
           {loading ? (
-            <p className="text-center text-muted-foreground">Loading devotees...</p>
+            <p className="text-center text-muted-foreground">
+              Loading devotees...
+            </p>
           ) : (
             <>
               <div className="text-center mb-8">
                 <h2 className="font-display text-2xl font-bold text-foreground mb-2">
                   {selectedSeason} {selectedYear} Devotees
                 </h2>
-                <p className="text-muted-foreground">{filterDevotees().length} devotees found</p>
+                <p className="text-muted-foreground">
+                  {filterDevotees().length} devotees found
+                </p>
               </div>
               <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                {filterDevotees().map((d, i) => (
-                  <DevoteeCard key={d.id} devotee={d} index={i} />
-                ))}
+                {searchedDevotees.map((d, i) => {
+                  // diya number from year and season filtered list
+                  const diyaIndex = filterByYearAndSeason.findIndex(dev => dev.id === d.id);
+                  return <DevoteeCard key={d.id} devotee={d} index={diyaIndex} />
+                })}
               </div>
             </>
           )}
