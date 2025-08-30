@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 export default function CTA() {
   return (
@@ -11,13 +12,15 @@ export default function CTA() {
         <p className="text-white/90 mb-6">
           Book your diya today and see your name in next year's devotee list
         </p>
-        <Button
-          variant="outline"
-          size="lg"
-          className="border-white/30 text-white hover:bg-white/10"
-        >
-          Book Your Diya Now
-        </Button>
+        <Link to={"/book-diya"}>
+          <Button
+            variant="outline"
+            size="lg"
+            className="border-white/30 text-white hover:bg-white/10"
+          >
+            Book Your Diya Now
+          </Button>
+        </Link>
       </Card>
     </div>
   );
