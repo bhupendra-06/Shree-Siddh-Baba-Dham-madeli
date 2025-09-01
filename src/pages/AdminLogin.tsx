@@ -1,23 +1,60 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AdminLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (username === "SSBDM" && password === "Madeli@123") {
-      setError("");
-      alert("✅ Login Successful! Welcome to Admin Panel.");
+  useEffect(() => {
+    const token = localStorage.getItem("adminToken");
+    if (token) {
       navigate("/admin-dashboard");
-    } else {
-      setError("❌ Invalid Username or Password");
+    }
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(""); // Clear old errors
+
+    try {
+      const res = await fetch(
+        "https://siddhbabatemplebackend.onrender.com/api/admin/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username,
+            password,
+          }),
+        }
+      );
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert("✅ Login Successful! Welcome to Admin Panel.");
+        localStorage.setItem("adminToken", "true");
+        setUsername("");
+        setPassword("");
+        navigate("/admin-dashboard");
+      } else {
+        setError("❌ Invalid Username or Password");
+      }
+    } catch (err) {
+      setError("⚠️ Something went wrong. Please try again.");
+      console.error("Login error: ", err);
     }
   };
+
+  // const handleChange = (e) =>{
+
+  // }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-pink-50 to-purple-50 flex flex-col items-center justify-center">
@@ -43,6 +80,7 @@ const AdminLogin = () => {
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
+              {error && <p className="text-red-500 text-xs">{error}</p>}
               <input
                 type="text"
                 placeholder="Username"
@@ -60,15 +98,12 @@ const AdminLogin = () => {
                 required
               />
 
-              {error && (
-                <p className="text-red-500 text-sm text-center">{error}</p>
-              )}
-
               <button
                 type="submit"
-                className="w-full py-2 rounded-lg bg-orange-500 text-white font-semibold hover:bg-orange-600 transition"
+                className="w-full py-2 rounded-lg bg-orange-500 text-white font-semibold hover:bg-orange-600 transition disabled:opacity-50"
+                disabled={loading}
               >
-                Login
+                {loading ? "Logging in..." : "Login"}
               </button>
             </form>
 

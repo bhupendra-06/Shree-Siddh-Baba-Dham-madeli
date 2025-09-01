@@ -13,9 +13,8 @@ const BookDiya = () => {
   const [formData, setFormData] = useState({
     name: "",
     contact: "",
-    city: "",
-    gotra: "",
-    prayer: "",
+    address: "",
+    whatsapp: "",
     diyaType: "",
   });
 
@@ -53,8 +52,11 @@ const BookDiya = () => {
     // Map your formData to API format
     const payload = {
       name: formData.name,
-      whatsappNumber: formData.gotra, // gotra field = whatsappNumber
-      address: formData.city, // city field = address
+      contactNumber: formData.contact,
+      address: formData.address,
+      whatsappNumber: formData.whatsapp,
+      diyaType: formData.diyaType,
+      paymentStatus: "PENDING",
       year: new Date().getFullYear(),
       season: getSeason(),
     };
@@ -78,9 +80,8 @@ const BookDiya = () => {
         setFormData({
           name: "",
           contact: "",
-          city: "",
-          gotra: "",
-          prayer: "",
+          address: "",
+          whatsapp: "",
           diyaType: "",
         });
       } else {
@@ -128,13 +129,13 @@ const BookDiya = () => {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="city">Full Address *</Label>
+                    <Label htmlFor="address">Full Address *</Label>
                     <Input
-                      id="city"
-                      name="city"
-                      value={formData.city}
+                      id="address"
+                      name="address"
+                      value={formData.address}
                       onChange={handleInputChange}
-                      placeholder="Enter your city or village"
+                      placeholder="Enter your address"
                       required
                     />
                   </div>
@@ -154,11 +155,11 @@ const BookDiya = () => {
                   </div>
 
                   <div>
-                    <Label htmlFor="gotra">Whatsapp Number *</Label>
+                    <Label htmlFor="whatsapp">Whatsapp Number *</Label>
                     <Input
-                      id="gotra"
-                      name="gotra"
-                      value={formData.gotra}
+                      id="whatsapp"
+                      name="whatsapp"
+                      value={formData.whatsapp}
                       onChange={handleInputChange}
                       placeholder="Enter your Whatsapp number"
                       required
@@ -204,7 +205,15 @@ const BookDiya = () => {
                 </Button>
 
                 {message && (
-                  <p className="text-center mt-4 text-sm font-medium text-primary">
+                  <p
+                    className={`text-center mt-4 text-sm font-medium ${
+                      message.startsWith("🎉")
+                        ? "text-green-600"
+                        : message.startsWith("❌") || message.startsWith("⚠️")
+                        ? "text-red-600"
+                        : "text-primary"
+                    }`}
+                  >
                     {message}
                   </p>
                 )}

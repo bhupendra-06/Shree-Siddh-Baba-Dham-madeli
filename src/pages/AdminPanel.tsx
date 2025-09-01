@@ -1,9 +1,176 @@
-import React from 'react'
+import { useEffect, useState } from "react";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Search, LogOut } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-const AdminPanel = () => {
+export default function AdminPanel() {
+  const [bookings, setBookings] = useState<any[]>([]);
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
+
+  // Check admin auth on mount
+  useEffect(() => {
+    const token = localStorage.getItem("adminToken");
+    if (!token) {
+      navigate("/admin-login");
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    const fetchDevotees = async () => {
+      try {
+        const res = await fetch(
+          "https://siddhbabatemplebackend.onrender.com/api/bookings"
+        );
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          setBookings(data);
+          console.log(data);
+        } else {
+          console.error("Unexpected response:", data);
+        }
+      } catch (err) {
+        console.error("Error fetching devotees:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDevotees();
+  }, []);
+
+  // Approve Payment
+  const approvePayment = (id: string) => {
+    setBookings((prev) =>
+      prev.map((b) => (b.id === id ? { ...b, paymentStatus: "APPROVED" } : b))
+    );
+  };
+
+  // 🚪 Logout Function
+  const handleLogout = () => {
+    localStorage.removeItem("adminToken");
+    navigate("/admin-login");
+  };
+
+  const filtered = bookings.filter((b) => {
+    const query = search.toLowerCase().trim();
+    return (
+      b.name.toLowerCase().includes(query) || b.whatsappNumber.includes(query)
+    );
+  });
+
   return (
-    <div className='text-4xl text-center m-2'>Admin Panel</div>
-  )
-}
+    <div className="min-h-screen w-full bg-gradient-to-r from-orange-50 via-pink-50 to-purple-50 p-4 px-0">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row items-center justify-between mb-6 px-4 gap-3">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 text-center">
+          Admin Dashboard - Diya Bookings
+        </h1>
+        <Button
+          onClick={handleLogout}
+          className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md shadow"
+        >
+          <LogOut size={16} />
+          <span className="sm:inline">Logout</span>
+        </Button>
+      </div>
 
-export default AdminPanel
+      {/* Search */}
+      <div className="max-w-2xl mx-4 md:mx-auto mb-6 flex items-center gap-2 relative">
+        <Input
+          placeholder="Search by name or WhatsApp..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <Search className="text-gray-500 absolute right-2" />
+      </div>
+
+      {/* Table */}
+      <Card className="overflow-scroll scrollbar-hide min-h-48 shadow-xl rounded-none mb-10 md:rounded-lg md:mx-8 ">
+        <table className="min-w-full text-left border-collapse">
+          <thead className="bg-orange-100 text-gray-700">
+            <tr>
+              <th className="p-3 px-6 min-w-36">Name</th>
+              <th className="p-3">Address</th>
+              <th className="p-3">Contact No.</th>
+              <th className="p-3">WhatsApp</th>
+              <th className="p-3 min-w-28">Diya Type</th>
+              <th className="p-3 ">Payment</th>
+              <th className="p-3 w-64  text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {loading ? (
+              <tr>
+                <td colSpan={6} className="p-3 text-center text-gray-500">
+                  Loading bookings...
+                </td>
+              </tr>
+            ) : filtered.length === 0 ? (
+              <tr>
+                <td colSpan={6} className="p-3 text-center text-gray-500">
+                  No bookings found.
+                </td>
+              </tr>
+            ) : (
+              filtered.map((b) => (
+                <tr
+                  key={b.id}
+                  className="border-b hover:bg-orange-50 transition-colors"
+                >
+                  <td className="p-3 px-6 font-medium">{b.name}</td>
+                  <td className="p-3">{b.address}</td>
+                  <td className="p-3 text-blue-600">{b.contactNumber}</td>
+                  <td className="p-3 text-blue-600">{b.whatsappNumber}</td>
+                  <td className="p-3">{b.diyaType}</td>
+                  <td className="p-3">
+                    <Badge
+                      className={`px-3 py-1 rounded-full text-xs font-semibold hover:bg-transparent ${
+                        b.paymentStatus === "APPROVED"
+                          ? "bg-green-100 text-green-700 border border-green-300"
+                          : "bg-yellow-100 text-yellow-700 border border-yellow-300"
+                      }`}
+                    >
+                      {b.paymentStatus === "APPROVED"
+                        ? "Approved"
+                        : "Pending.. "}
+                    </Badge>
+                  </td>
+                  <td className="p-3 text-center">
+                    {b.paymentStatus !== "APPROVED" ? (
+                      <Button
+                        onClick={() => approvePayment(b.id)}
+                        className="bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-500 hover:to-emerald-600 active:bg-transparent text-white font-medium rounded-sm px-4 shadow-md transition-all"
+                      >
+                        Approve
+                      </Button>
+                    ) : (
+                      <Button
+                        disabled
+                        className="bg-gray-200 text-gray-500 font-medium rounded-sm w-24 px-4 shadow-none cursor-not-allowed"
+                      >
+                        Done
+                      </Button>
+                    )}
+                    {
+                      <Button
+                        onClick={() => approvePayment(b.id)}
+                        className="ml-2 bg-gradient-to-r from-red-400 to-red-500 hover:from-red-500 hover:to-red-600 active:bg-transparent text-white font-medium rounded-sm px-4 shadow-md transition-all"
+                      >
+                        Approve
+                      </Button>
+                    }
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </Card>
+    </div>
+  );
+}
