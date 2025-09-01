@@ -50,6 +50,33 @@ export default function AdminPanel() {
     );
   };
 
+  // Delete Booking
+  const deleteBooking = async (id: string) => {
+    if (!window.confirm("Are you sure you want to delete this booking?"))
+      return;
+
+    try {
+      const res = await fetch(
+        `https://siddhbabatemplebackend.onrender.com/api/bookings/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (res.ok) {
+        // remove deleted booking from state
+        setBookings((prev) => prev.filter((b) => b.id !== id));
+        alert("Booking deleted successfully!");
+      } else {
+        const errorMsg = await res.text();
+        alert("Error: " + errorMsg);
+      }
+    } catch (err) {
+      console.error("Error deleting booking:", err);
+      alert("Failed to delete booking. Please try again.");
+    }
+  };
+
   // 🚪 Logout Function
   const handleLogout = () => {
     localStorage.removeItem("adminToken");
@@ -100,7 +127,7 @@ export default function AdminPanel() {
               <th className="p-3">WhatsApp</th>
               <th className="p-3 min-w-28">Diya Type</th>
               <th className="p-3 ">Payment</th>
-              <th className="p-3 w-64  text-center">Action</th>
+              <th className="p-3 min-w-64 md:w-28 text-center">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -158,10 +185,10 @@ export default function AdminPanel() {
                     )}
                     {
                       <Button
-                        onClick={() => approvePayment(b.id)}
+                        onClick={() => deleteBooking(b.id)}
                         className="ml-2 bg-gradient-to-r from-red-400 to-red-500 hover:from-red-500 hover:to-red-600 active:bg-transparent text-white font-medium rounded-sm px-4 shadow-md transition-all"
                       >
-                        Approve
+                        Delete
                       </Button>
                     }
                   </td>
