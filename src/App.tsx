@@ -42,7 +42,7 @@ const App = () => (
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/gallery/:eventId" element={<Gallery />} />
           <Route path="/donations" element={<Donations />} />
-          <Route path="/login" element={<AdminLogin />} />
+          <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/admin-dashboard" element={<AdminPanel />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

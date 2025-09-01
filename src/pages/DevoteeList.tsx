@@ -161,7 +161,7 @@ const DevoteeList = () => {
             </div>
             <Input
               type="text"
-              placeholder="Search by name, address, or number..."
+              placeholder="Search by name..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-10 py-3 border-border/50 focus:border-primary bg-white/80 backdrop-blur-sm"
