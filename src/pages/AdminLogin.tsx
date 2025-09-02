@@ -49,6 +49,8 @@ const AdminLogin = () => {
     } catch (err) {
       setError("⚠️ Something went wrong. Please try again.");
       console.error("Login error: ", err);
+    }finally{
+      setLoading(false);
     }
   };
 

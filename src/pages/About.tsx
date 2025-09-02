@@ -5,6 +5,7 @@ import { Flame, Calendar, Users, Heart } from "lucide-react";
 import templeHero from "@/assets/temple-hero.jpg";
 import diyaRows from "@/assets/diya-rows.jpg";
 import CTA from "@/components/CTA";
+import PeopleCarousel from "@/components/PeopleCarousel";
 
 const About = () => {
   return (
@@ -43,7 +44,7 @@ const About = () => {
           <div className="grid lg:grid-cols-2 gap-16 items-center mb-10">
             <div>
               <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-6">
-                History
+                इतिहास
               </h2>
               <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
                 <p>
@@ -89,7 +90,7 @@ const About = () => {
           {/* Story Section */}
           <div className="bg-gradient-card rounded-3xl p-8 md:p-12 border border-border/50">
             <h2 className="font-display text-3xl font-bold text-foreground mb-8 text-center">
-              The Story of Diya Booking
+              <span className="text-orange-600">दीप अर्पण </span> की परंपरा
             </h2>
             <div className="prose prose-lg max-w-none text-muted-foreground">
               <p className="text-lg leading-relaxed mb-6">
@@ -121,6 +122,7 @@ const About = () => {
           </div>
         </div>
       </section>
+      <PeopleCarousel />
       <CTA />
       <Footer />
     </div>

@@ -88,16 +88,6 @@ export const Footer = () => {
                   +91 88391 17716
                 </a>
               </div>
-              <div className="flex items-center gap-3">
-                <Phone className="h-5 w-5 text-primary" />
-
-                <a
-                  href="tel:9009610596"
-                  className="text-sm text-muted-foreground"
-                >
-                  +91 90096 10596
-                </a>
-              </div>
               <div className="flex items-start gap-3">
                 <Mail className="h-5 w-5 text-primary mt-0.5 shrink-0" />
                 <a
