@@ -11,6 +11,8 @@ import DevoteeList from "./pages/DevoteeList";
 import Gallery from "./pages/Gallery";
 import Donations from "./pages/Donations";
 import NotFound from "./pages/NotFound";
+import AdminLogin from "./pages/AdminLogin";
+import AdminPanel from "./pages/AdminPanel";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +42,8 @@ const App = () => (
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/gallery/:eventId" element={<Gallery />} />
           <Route path="/donations" element={<Donations />} />
+          <Route path="/admin-login" element={<AdminLogin />} />
+          <Route path="/admin-dashboard" element={<AdminPanel />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

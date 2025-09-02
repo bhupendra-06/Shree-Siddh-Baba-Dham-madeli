@@ -16,7 +16,7 @@ const Gallery = () => {
   const [activeImages, setActiveImages] = useState<any[]>([]); // store current event's images
   const { eventId } = useParams();
 
-  // Event-based gallery organization
+  // Event-based gallery
   const events = {
     "navratri-2024": {
       title: "Navratri 2024 Celebration",
@@ -260,3 +260,5 @@ const Gallery = () => {
 };
 
 export default Gallery;
+
+

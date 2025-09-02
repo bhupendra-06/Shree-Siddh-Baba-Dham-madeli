@@ -29,7 +29,7 @@ export const Header = () => {
               <h1 className="rozha-one-regular font-display font-bold text-lg text-foreground">
                 श्री सिद्ध बाबा धाम
               </h1>
-              <p className="text-xs text-muted-foreground">पावन मंदिर, मडेली</p>
+              <p className="text-xs text-muted-foreground">पावन मंदिर, मड़ेली</p>
             </div>
           </Link>
 
@@ -56,6 +56,11 @@ export const Header = () => {
             <Link to="/book-diya">
               <Button variant="temple" size="lg" className="hover:scale-105 transition-transform duration-300">
                 Book Your Diya
+              </Button>
+            </Link>
+            <Link to="/admin-login">
+              <Button size="lg" className="hover:scale-105 bg-teal-500 hover:bg-teal-700 ml-2 transition-transform duration-300">
+                Login
               </Button>
             </Link>
           </div>
@@ -90,6 +95,11 @@ export const Header = () => {
                   Book Your Diya
                 </Button>
               </Link>
+              <Link to="/admin-login">
+              <Button size="lg" className="hover:scale-105 bg-teal-400 hover:bg-teal-700 w-full transition-transform duration-300">
+                Login
+              </Button>
+            </Link>
             </nav>
           </div>
         )}

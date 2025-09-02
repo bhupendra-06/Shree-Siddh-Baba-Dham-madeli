@@ -1,39 +1,100 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Search, Users, MapPin, Phone } from "lucide-react";
-import { useState } from "react";
+import { Search, Users, MapPin, Flame } from "lucide-react"; // 🔥 replaced Phone with Flame for diya
+import { useEffect, useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import CTA from "@/components/CTA";
 
-// Example data
-const devotees = [
-  { name: "Bhupendra", whatsappNumber: "8888888888", address: "Bhilai, CG", year: 2024, season: "SHARDIYA" },
-  { name: "RajKumar", whatsappNumber: "8888888888", address: "Bhilai, CG", year: 2024, season: "SHARDIYA" },
-  { name: "Rahul", whatsappNumber: "8888888888", address: "Bhilai, CG", year: 2024, season: "SHARDIYA" },
-  { name: "Deepak", whatsappNumber: "8888888888", address: "Bhilai, CG", year: 2024, season: "SHARDIYA" },
-  { name: "Rohit", whatsappNumber: "9999999999", address: "Raipur, CG", year: 2024, season: "CHAITRA" },
-  { name: "Priya", whatsappNumber: "7777777777", address: "Durg, CG", year: 2025, season: "SHARDIYA" },
-  { name: "Amit", whatsappNumber: "6666666666", address: "Bilaspur, CG", year: 2025, season: "CHAITRA" }
-];
+interface Devotee {
+  id: string;
+  name: string;
+  whatsappNumber: string;
+  address: string;
+  year: number;
+  season: string;
+  paymentStatus: string;
+}
+
+const getSeason = () => {
+  const month = new Date().getMonth() + 1;
+
+  if (month >= 3 && month <= 5) return "CHAITRA";
+  if (month >= 9 && month <= 11) return "SHARDIYA";
+  return "SHARDIYA"; // Default value if not in range
+};
 
 const DevoteeList = () => {
+  const [devotees, setDevotees] = useState<Devotee[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
 
-  // Filter function by year, season, and search
-  const filterDevotees = (year: number, season: string) => {
-    return devotees.filter(devotee =>
-      devotee.year === year &&
-      devotee.season.toLowerCase() === season.toLowerCase() &&
-      (devotee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-       devotee.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
-       devotee.whatsappNumber.includes(searchTerm))
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [selectedSeason, setSelectedSeason] = useState(getSeason());
+
+  // Fetch devotees from API
+  useEffect(() => {
+    const fetchDevotees = async () => {
+      try {
+        const res = await fetch(
+          "https://siddhbabatemplebackend.onrender.com/api/bookings"
+        );
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          setDevotees(data);
+        } else {
+          console.error("Unexpected response:", data);
+        }
+      } catch (err) {
+        console.error("Error fetching devotees:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDevotees();
+  }, []);
+
+  // Filter function
+  const filterDevotees = () => {
+    return devotees.filter(
+      (devotee) =>
+        devotee.year === selectedYear &&
+        devotee.season.toLowerCase() === selectedSeason.toLowerCase() &&
+        (devotee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          devotee.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          devotee.whatsappNumber.includes(searchTerm))
     );
   };
 
-  const DevoteeCard = ({ devotee }: { devotee: any }) => (
+  // Year + Season filter
+  const filterByYearAndSeason = devotees.filter(
+    (devotee) =>
+      devotee.year === selectedYear &&
+      devotee.season.toLowerCase() === selectedSeason.toLowerCase()
+  );
+
+  // Apply Search only on filtered list
+  const searchedDevotees = filterByYearAndSeason.filter(
+    (devotee) =>
+      devotee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      devotee.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      devotee.whatsappNumber.includes(searchTerm)
+  );
+
+  const DevoteeCard = ({
+    devotee,
+    index,
+  }: {
+    devotee: Devotee;
+    index: number;
+  }) => (
     <Card className="p-6 bg-gradient-card border-0 shadow-card hover:shadow-temple transition-all duration-300 group hover:scale-105">
       <div className="flex items-center gap-4">
         <div className="flex-shrink-0">
@@ -51,10 +112,22 @@ const DevoteeList = () => {
               {devotee.address}
             </div>
             <div className="flex items-center gap-1">
-              <Phone className="h-3 w-3" />
-              {devotee.whatsappNumber}
+              <Flame className="h-3 w-3 text-orange-500" /> {/* 🔥 diya icon */}
+              Diya #{index + 1}
             </div>
           </div>
+          <p className="text-xs mt-2 text-muted-foreground">
+            Status:{" "}
+            <span
+              className={`${
+                devotee.paymentStatus === "PAID"
+                  ? "text-green-600"
+                  : "text-red-600"
+              } font-medium`}
+            >
+              {devotee.paymentStatus}
+            </span>
+          </p>
         </div>
       </div>
     </Card>
@@ -71,87 +144,90 @@ const DevoteeList = () => {
             <Users className="h-5 w-5 text-primary" />
             <span className="font-medium text-primary">Sacred Community</span>
           </div>
-          
+
           <h1 className="font-display text-4xl md:text-6xl font-bold text-foreground mb-6">
             Devotee List
           </h1>
-          
+
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            Explore the blessed community of devotees who have lit their diyas at our sacred temple
+            Explore the blessed community of devotees who have lit their diyas
+            at our sacred temple
           </p>
 
           {/* Search Bar */}
-          <div className="max-w-md mx-auto relative">
+          <div className="max-w-md mx-auto relative mb-6">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Search className="h-5 w-5 text-muted-foreground" />
             </div>
             <Input
               type="text"
-              placeholder="Search by name, address, or number..."
+              placeholder="Search by name..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-10 py-3 border-border/50 focus:border-primary bg-white/80 backdrop-blur-sm"
             />
           </div>
+
+          {/* Filters (Mobile friendly dropdowns) */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Select
+              value={selectedYear.toString()}
+              onValueChange={(val) => setSelectedYear(Number(val))}
+            >
+              <SelectTrigger className="w-full sm:w-40 bg-white">
+                <SelectValue placeholder="Select Year" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="2024">2024</SelectItem>
+                <SelectItem value="2025">2025</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Select
+              value={selectedSeason}
+              onValueChange={(val) => setSelectedSeason(val)}
+            >
+              <SelectTrigger className="w-full sm:w-40 bg-white">
+                <SelectValue placeholder="Select Season" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="CHAITRA">Chaitra</SelectItem>
+                <SelectItem value="SHARDIYA">Shardiya</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </section>
 
-      {/* Devotee List Section */}
+      {/* Devotee List */}
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <Tabs defaultValue="shardiya2024" className="w-full">
-            <div className="flex justify-center mb-12">
-              <TabsList className="grid w-full max-w-lg grid-cols-4 bg-muted/50">
-                <TabsTrigger value="chaitra2024" className="font-medium text-xs md:text-sm">Chaitra 2024</TabsTrigger>
-                <TabsTrigger value="shardiya2024" className="font-medium text-xs md:text-sm">Shardiya 2024</TabsTrigger>
-                <TabsTrigger value="chaitra2025" className="font-medium text-xs md:text-sm">Chaitra 2025</TabsTrigger>
-                <TabsTrigger value="shardiya2025" className="font-medium text-xs md:text-sm">Shardiya 2025</TabsTrigger>
-              </TabsList>
-            </div>
-
-            {/* Tab Contents */}
-            <TabsContent value="chaitra2024" className="space-y-4">
+          {loading ? (
+            <p className="text-center text-muted-foreground">
+              Loading devotees...
+            </p>
+          ) : (
+            <>
               <div className="text-center mb-8">
-                <h2 className="font-display text-2xl font-bold text-foreground mb-2">Chaitra 2024 Devotees</h2>
-                <p className="text-muted-foreground">{filterDevotees(2024, "CHAITRA").length} devotees found</p>
+                <h2 className="font-display text-2xl font-bold text-foreground mb-2">
+                  {selectedSeason} {selectedYear} Devotees
+                </h2>
+                <p className="text-muted-foreground">
+                  {filterDevotees().length} devotees found
+                </p>
               </div>
               <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                {filterDevotees(2024, "CHAITRA").map((d, i) => <DevoteeCard key={i} devotee={d} />)}
+                {searchedDevotees.map((d, i) => {
+                  // diya number from year and season filtered list
+                  const diyaIndex = filterByYearAndSeason.findIndex(dev => dev.id === d.id);
+                  return <DevoteeCard key={d.id} devotee={d} index={diyaIndex} />
+                })}
               </div>
-            </TabsContent>
-
-            <TabsContent value="shardiya2024" className="space-y-4">
-              <div className="text-center mb-8">
-                <h2 className="font-display text-2xl font-bold text-foreground mb-2">Shardiya 2024 Devotees</h2>
-                <p className="text-muted-foreground">{filterDevotees(2024, "SHARDIYA").length} devotees found</p>
-              </div>
-              <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                {filterDevotees(2024, "SHARDIYA").map((d, i) => <DevoteeCard key={i} devotee={d} />)}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="chaitra2025" className="space-y-4">
-              <div className="text-center mb-8">
-                <h2 className="font-display text-2xl font-bold text-foreground mb-2">Chaitra 2025 Devotees</h2>
-                <p className="text-muted-foreground">{filterDevotees(2025, "CHAITRA").length} devotees found</p>
-              </div>
-              <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                {filterDevotees(2025, "CHAITRA").map((d, i) => <DevoteeCard key={i} devotee={d} />)}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="shardiya2025" className="space-y-4">
-              <div className="text-center mb-8">
-                <h2 className="font-display text-2xl font-bold text-foreground mb-2">Shardiya 2025 Devotees</h2>
-                <p className="text-muted-foreground">{filterDevotees(2025, "SHARDIYA").length} devotees found</p>
-              </div>
-              <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                {filterDevotees(2025, "SHARDIYA").map((d, i) => <DevoteeCard key={i} devotee={d} />)}
-              </div>
-            </TabsContent>
-          </Tabs>
+            </>
+          )}
         </div>
       </section>
+
       <CTA />
       <Footer />
     </div>

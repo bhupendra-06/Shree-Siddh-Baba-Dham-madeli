@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
+import noUser from "@/assets/no-user.jpg";
 
 interface Member {
   name: string;
@@ -13,31 +14,31 @@ const members: Member[] = [
     name: "Mohan Thakur",
     position: "Adhyaksh",
     mobile: "7804827109",
-    image: "https://randomuser.me/api/portraits/men/32.jpg",
+    image: noUser,
   },
   {
     name: "Purushottam Netam",
     position: "Sachiv",
     mobile: "9098412384",
-    image: "https://randomuser.me/api/portraits/men/33.jpg",
+    image: noUser,
   },
   {
     name: "Tej Ram Sahu",
     position: "Upadhyaksh",
     mobile: "6268678377",
-    image: "https://randomuser.me/api/portraits/men/34.jpg",
+    image: noUser,
   },
   {
     name: "Hitesh Patel",
     position: "Koshadhyaksh",
     mobile: "6265644983",
-    image: "https://randomuser.me/api/portraits/men/35.jpg",
+    image: noUser,
   },
   {
     name: "Purushottam Kansari",
     position: "Sahsachiv",
     mobile: "XXXXXXXXXX",
-    image: "https://randomuser.me/api/portraits/men/36.jpg",
+    image: noUser,
   },
 ];
 
@@ -105,8 +106,8 @@ export default function MembersCarousel() {
               className="flex-[0_0_100%] sm:flex-[0_0_50%] md:flex-[0_0_33.33%] lg:flex-[0_0_25%] p-4"
             >
               <div className="bg-blue-200/80 rounded-lg shadow-lg p-6 hover:scale-105 transition duration-300">
-                <img
-                  src={member.image}
+               <img
+                  src={member.image ? member.image : noUser}
                   alt={member.name}
                   className="mx-auto w-28 h-28 rounded-full object-cover border-2 border-gray-300"
                 />

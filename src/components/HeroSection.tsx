@@ -31,15 +31,15 @@ export const HeroSection = () => {
           </div> */}
 
           {/* Main Heading */}
-          <h1 className="rozha-one-regular text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+          <h1 className="mt-14 md:mt-0 rozha-one-regular text-5xl md:text-6xl lg:text-8xl font-bold mb-6 leading-tight">
 
             श्री सिद्ध बाबा 
-            <span className="block text-accent text-yellow-300 ">पावन धाम, मडेली</span>
+            <span className="block text-accent text-3xl md:text-5xl text-yellow-300 ">पावन धाम, मड़ेली</span>
           </h1>
 
 
           {/* Subtitle */}
-          <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl md:text-2xl text-gray-100/90 mb-8 max-w-2xl mx-auto">
             अपना पावन दीप जलाएँ और माँ के चरणों में इस दिव्य नवरात्रि उत्सव का
             हिस्सा बनें। हजारों भक्तों के साथ जुड़कर इस पुण्य परंपरा में शामिल
             हों।

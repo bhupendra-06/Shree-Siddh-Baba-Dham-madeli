@@ -29,7 +29,7 @@ export const Footer = () => {
                 <h3 className="rozha-one-regular font-display font-bold text-2xl text-foreground">
                   श्री सिद्ध बाबा धाम
                 </h3>
-                <p className="text-muted-foreground">पावन मंदिर, मडेली</p>
+                <p className="text-muted-foreground">पावन मंदिर, मड़ेली</p>
               </div>
             </div>
             <p className="text-muted-foreground leading-relaxed mb-6">
@@ -72,9 +72,9 @@ export const Footer = () => {
                 <MapPin className="h-5 w-5 text-primary mt-0.5" />
                 <div>
                   <p className="text-sm text-muted-foreground">
-                  श्री सिद्ध बाबा धाम
+                    श्री सिद्ध बाबा धाम मड़ेली,
                     <br />
-                    मडेली, गरियाबंद, छत्तीसगढ़ (493889)
+                    गरियाबंद, छत्तीसगढ़ (493889)
                   </p>
                 </div>
               </div>
@@ -86,16 +86,6 @@ export const Footer = () => {
                   className="text-sm text-muted-foreground"
                 >
                   +91 88391 17716
-                </a>
-              </div>
-              <div className="flex items-center gap-3">
-                <Phone className="h-5 w-5 text-primary" />
-
-                <a
-                  href="tel:9009610596"
-                  className="text-sm text-muted-foreground"
-                >
-                  +91 90096 10596
                 </a>
               </div>
               <div className="flex items-start gap-3">
@@ -121,7 +111,9 @@ export const Footer = () => {
                 <p className="text-sm text-muted-foreground mb-3">
                   Scan to donate via UPI
                 </p>
-                <p className="text-xs text-accent font-medium">7804827109@ybl</p>
+                <p className="text-xs text-accent font-medium">
+                  7804827109@ybl
+                </p>
               </div>
             </Card>
             <Link to="/donations">
