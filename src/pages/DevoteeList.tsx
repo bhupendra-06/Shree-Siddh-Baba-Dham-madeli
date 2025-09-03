@@ -112,7 +112,7 @@ const DevoteeList = () => {
               {devotee.address}
             </div>
             <div className="flex items-center gap-1">
-              <Flame className="h-3 w-3 text-orange-500" /> 🔥 diya icon
+              <Flame className="h-3 w-3 text-orange-500" />
               Diya No:- {index + 1}
             </div>
           </div>

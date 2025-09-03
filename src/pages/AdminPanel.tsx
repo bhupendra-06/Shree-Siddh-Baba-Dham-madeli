@@ -230,7 +230,7 @@ export default function AdminPanel() {
                   <td className="p-3">{b.diyaType}</td>
                   <td className="p-3">
                     <Badge
-                      className={`px-3 py-1 rounded-full text-xs font-semibold hover:bg-transparent ${
+                      className={`px-3 py-1 whitespace-nowrap rounded-full text-xs font-semibold hover:bg-transparent ${
                         b.paymentStatus === "PAID"
                           ? "bg-green-100 text-green-700 border border-green-300"
                           : "bg-yellow-100 text-yellow-700 border border-yellow-300"
