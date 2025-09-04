@@ -8,7 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+} from "@/components/ui/alert-dialog";
 
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
@@ -88,9 +88,6 @@ export default function AdminPanel() {
 
   // ✅ Delete Booking
   const deleteBooking = async (id: string) => {
-    if (!window.confirm("Are you sure you want to delete this booking?"))
-      return;
-
     try {
       const res = await fetch(
         `https://siddhbabatemplebackend.onrender.com/api/bookings/${id}`,
@@ -200,7 +197,7 @@ export default function AdminPanel() {
               <th className="p-3">WhatsApp</th>
               <th className="p-3 min-w-28">Diya Type</th>
               <th className="p-3">Payment</th>
-              <th className="p-3 min-w-64 md:w-28 text-center">Action</th>
+              <th className="p-3 min-w-52 md:w-24 text-center">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -239,7 +236,7 @@ export default function AdminPanel() {
                       {b.paymentStatus === "PAID" ? "Approved ✔" : "Pending.. "}
                     </Badge>
                   </td>
-                  <td className="p-3 text-center">
+                  <td className="p-3 text-center flex">
                     {b.paymentStatus !== "PAID" ? (
                       <Button
                         onClick={() => approvePayment(b._id || b.id)}
@@ -257,12 +254,32 @@ export default function AdminPanel() {
                         Done
                       </Button>
                     )}
-                    <Button
-                      onClick={() => deleteBooking(b._id || b.id)}
-                      className="ml-2 bg-gradient-to-r from-red-400 to-red-500 hover:from-red-500 hover:to-red-600 active:bg-transparent text-white font-medium rounded-sm px-4 shadow-md transition-all"
-                    >
-                      Delete
-                    </Button>
+                    {/* DELETE BUTTON */}
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button className="flex items-center gap-2 ml-2 bg-gradient-to-r from-red-400 to-red-500 hover:from-red-500 hover:to-red-600 active:bg-transparent text-white">
+                          <span className=" font-medium tracking-wide">
+                            Delete
+                          </span>
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This Booking will be deleted parmanently.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => deleteBooking(b._id || b.id)}
+                          >
+                            Delete
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </td>
                 </tr>
               ))
