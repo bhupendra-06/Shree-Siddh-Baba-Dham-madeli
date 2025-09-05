@@ -145,13 +145,12 @@ const DevoteeList = () => {
             <span className="font-medium text-primary">Sacred Community</span>
           </div>
 
-          <h1 className="font-display text-4xl md:text-6xl font-bold text-foreground mb-6">
-            Devotee List
+          <h1 className="font-mono text-4xl md:text-3xl font-bold text-foreground mb-6">
+            ज्योत जलाने वाले भक्तगण
           </h1>
 
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            Explore the blessed community of devotees who have lit their diyas
-            at our sacred temple
+            हमारे पावन मंदिर में दिव्य ज्योति प्रज्वलित करने वाले श्रद्धालु भक्तों के धन्य समुदाय का विस्तृत विवरण देखें
           </p>
 
           {/* Search Bar */}
