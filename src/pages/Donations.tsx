@@ -64,17 +64,13 @@ const Donations = () => {
       {/* Hero Section */}
       <section className="py-24 pt-32 bg-gradient-to-br from-primary/5 to-secondary/5">
         <div className="container mx-auto px-4 text-center">
-          <div className="inline-flex items-center gap-2 bg-primary/10 backdrop-blur-sm border border-primary/20 rounded-full px-6 py-3 mb-6">
-            <Heart className="h-5 w-5 text-primary" />
-            <span className="font-medium text-primary">Sacred Giving</span>
-          </div>
           
-          <h1 className="font-display text-4xl md:text-6xl font-bold text-foreground mb-6">
-            Support Our Temple
+          <h1 className="font-display text-4xl md:text-3xl font-bold text-foreground mb-6">
+            हमारे मंदिर का सहयोग करें
           </h1>
           
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Your generous donations help us maintain our sacred traditions and serve the devotee community
+            आपकी उदारता हमें हमारी दिव्य परंपराओं को संजोए रखने और भक्तों की सेवा में निरंतर समर्पित रहने की शक्ति देती है
           </p>
         </div>
       </section>

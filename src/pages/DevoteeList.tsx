@@ -142,7 +142,7 @@ const DevoteeList = () => {
         <div className="container mx-auto px-4 text-center">
 
           <h1 className="font-mono text-4xl md:text-3xl font-bold text-foreground mb-6">
-            ज्योत जलाने वाले भक्तगण
+            भक्तगण सूची
           </h1>
 
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
