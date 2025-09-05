@@ -9,6 +9,13 @@ import { useParams, Link } from "react-router-dom";
 import diyaLight from "@/assets/diya-light.jpg";
 import diyaRows from "@/assets/diya-rows.jpg";
 import templeHero from "@/assets/temple-hero.jpg";
+import g1 from "@/assets/g1.jpg";
+import g2 from "@/assets/g2.jpg";
+import g3 from "@/assets/g3.jpg";
+import g4 from "@/assets/g4.jpg";
+import g5 from "@/assets/g5.jpg";
+import g6 from "@/assets/g6.jpg";
+import g7 from "@/assets/g7.jpg";
 
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -22,12 +29,12 @@ const Gallery = () => {
       title: "Navratri 2024 Celebration",
       description: "Nine divine nights of celebration and devotion",
       images: [
-        { src: templeHero, title: "Navratri Evening Prayers", description: "Divine atmosphere during evening prayers" },
-        { src: diyaLight, title: "Sacred Diya Lighting", description: "Devotees lighting diyas with devotion" },
-        { src: diyaRows, title: "Thousand Diyas Illumination", description: "Spectacular view of illuminated temple" },
-        { src: templeHero, title: "Temple Morning Aarti", description: "Morning prayers and rituals" },
-        { src: diyaLight, title: "Devotee Prayers", description: "Faithful devotees in prayer" },
-        { src: diyaRows, title: "Festival Celebration", description: "Community celebrating together" }
+        { src: g1, title: "Navratri Evening Prayers", description: "Divine atmosphere during evening prayers" },
+        { src: g2, title: "Sacred Diya Lighting", description: "Devotees lighting diyas with devotion" },
+        { src: g3, title: "Thousand Diyas Illumination", description: "Spectacular view of illuminated temple" },
+        { src: g4, title: "Temple Morning Aarti", description: "Morning prayers and rituals" },
+        { src: g5, title: "Devotee Prayers", description: "Faithful devotees in prayer" },
+        { src: g6, title: "Festival Celebration", description: "Community celebrating together" }
       ]
     },
     "navratri-2023": {
