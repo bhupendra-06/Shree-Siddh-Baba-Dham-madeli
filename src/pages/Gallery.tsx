@@ -3,7 +3,14 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
-import { Camera, Play, Calendar, Heart, ArrowLeft, ArrowRight } from "lucide-react";
+import {
+  Camera,
+  Play,
+  Calendar,
+  Heart,
+  ArrowLeft,
+  ArrowRight,
+} from "lucide-react";
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import diyaLight from "@/assets/diya-light.jpg";
@@ -29,39 +36,109 @@ const Gallery = () => {
       title: "Navratri 2024 Celebration",
       description: "Nine divine nights of celebration and devotion",
       images: [
-        { src: g1, title: "Navratri Evening Prayers", description: "Divine atmosphere during evening prayers" },
-        { src: g2, title: "Sacred Diya Lighting", description: "Devotees lighting diyas with devotion" },
-        { src: g3, title: "Thousand Diyas Illumination", description: "Spectacular view of illuminated temple" },
-        { src: g4, title: "Temple Morning Aarti", description: "Morning prayers and rituals" },
-        { src: g5, title: "Devotee Prayers", description: "Faithful devotees in prayer" },
-        { src: g6, title: "Festival Celebration", description: "Community celebrating together" }
-      ]
+        {
+          src: g1,
+          title: "Navratri Evening Prayers",
+          description: "Divine atmosphere during evening prayers",
+        },
+        {
+          src: g2,
+          title: "Sacred Diya Lighting",
+          description: "Devotees lighting diyas with devotion",
+        },
+        {
+          src: g3,
+          title: "Thousand Diyas Illumination",
+          description: "Spectacular view of illuminated temple",
+        },
+        {
+          src: g4,
+          title: "Temple Morning Aarti",
+          description: "Morning prayers and rituals",
+        },
+        {
+          src: g5,
+          title: "Devotee Prayers",
+          description: "Faithful devotees in prayer",
+        },
+        {
+          src: g6,
+          title: "Festival Celebration",
+          description: "Community celebrating together",
+        },
+      ],
     },
     "navratri-2023": {
       title: "Navratri 2023 Memories",
       description: "Cherished moments from previous year's celebration",
       images: [
-        { src: diyaRows, title: "Grand Diya Display 2023", description: "Beautiful diya arrangements" },
-        { src: templeHero, title: "Temple Decoration", description: "Festive temple decorations" },
-        { src: diyaLight, title: "Evening Ceremonies", description: "Sacred evening rituals" },
-        { src: diyaRows, title: "Community Gathering", description: "Devotees coming together" }
-      ]
+        {
+          src: diyaRows,
+          title: "Grand Diya Display 2023",
+          description: "Beautiful diya arrangements",
+        },
+        {
+          src: templeHero,
+          title: "Temple Decoration",
+          description: "Festive temple decorations",
+        },
+        {
+          src: diyaLight,
+          title: "Evening Ceremonies",
+          description: "Sacred evening rituals",
+        },
+        {
+          src: diyaRows,
+          title: "Community Gathering",
+          description: "Devotees coming together",
+        },
+      ],
     },
     "diya-lighting": {
       title: "Diya Lighting Ceremony",
       description: "Sacred ritual of lighting diyas",
       images: [
-        { src: diyaLight, title: "Individual Diya Lighting", description: "Personal moments of devotion" },
-        { src: diyaRows, title: "Mass Diya Lighting", description: "Community participation" },
-        { src: templeHero, title: "Temple Illumination", description: "Temple glowing with diyas" }
-      ]
-    }
+        {
+          src: diyaLight,
+          title: "Individual Diya Lighting",
+          description: "Personal moments of devotion",
+        },
+        {
+          src: diyaRows,
+          title: "Mass Diya Lighting",
+          description: "Community participation",
+        },
+        {
+          src: templeHero,
+          title: "Temple Illumination",
+          description: "Temple glowing with diyas",
+        },
+      ],
+    },
   };
 
   const videos = [
-    { type: "video", thumbnail: templeHero, title: "Navratri 2024 Highlights", duration: "5:32", views: "1.2K" },
-    { type: "video", thumbnail: diyaLight, title: "Diya Lighting Ceremony", duration: "3:45", views: "856" },
-    { type: "video", thumbnail: diyaRows, title: "Temple Morning Prayers", duration: "8:15", views: "2.1K" }
+    {
+      type: "video",
+      thumbnail: templeHero,
+      title: "Navratri 2024 Highlights",
+      duration: "5:32",
+      views: "1.2K",
+    },
+    {
+      type: "video",
+      thumbnail: diyaLight,
+      title: "Diya Lighting Ceremony",
+      duration: "3:45",
+      views: "856",
+    },
+    {
+      type: "video",
+      thumbnail: diyaRows,
+      title: "Temple Morning Prayers",
+      duration: "8:15",
+      views: "2.1K",
+    },
   ];
 
   const openLightbox = (imageSrc: string, images: any[], index: number) => {
@@ -77,11 +154,13 @@ const Gallery = () => {
 
   const navigateImage = (direction: "prev" | "next", images: any[]) => {
     if (direction === "prev") {
-      const newIndex = currentImageIndex > 0 ? currentImageIndex - 1 : images.length - 1;
+      const newIndex =
+        currentImageIndex > 0 ? currentImageIndex - 1 : images.length - 1;
       setCurrentImageIndex(newIndex);
       setSelectedImage(images[newIndex].src);
     } else {
-      const newIndex = currentImageIndex < images.length - 1 ? currentImageIndex + 1 : 0;
+      const newIndex =
+        currentImageIndex < images.length - 1 ? currentImageIndex + 1 : 0;
       setCurrentImageIndex(newIndex);
       setSelectedImage(images[newIndex].src);
     }
@@ -109,7 +188,9 @@ const Gallery = () => {
               <h1 className="font-display text-3xl md:text-5xl font-bold text-foreground mb-4">
                 {event.title}
               </h1>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">{event.description}</p>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                {event.description}
+              </p>
             </div>
           </div>
         </section>
@@ -132,10 +213,10 @@ const Gallery = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                    <div className="absolute bottom-0 left-0 right-0 p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                    {/* <div className="absolute bottom-0 left-0 right-0 p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
                       <h3 className="font-semibold text-white text-sm mb-1">{image.title}</h3>
                       <p className="text-white/80 text-xs">{image.description}</p>
-                    </div>
+                    </div> */}
                   </div>
                 </Card>
               ))}
@@ -187,9 +268,9 @@ const Gallery = () => {
               </button>
 
               {/* Image Info */}
-              <div className="absolute bottom-4 left-4 right-4 bg-black/50 backdrop-blur-sm rounded-lg p-4 text-white">
+              <div className="absolute bottom-4 left-4 right-4 w-fit mx-auto bg-black/50 backdrop-blur-sm rounded-lg p-4 text-white">
                 <div className="text-center">
-                  <h3 className="font-semibold mb-1">{activeImages[currentImageIndex]?.title}</h3>
+                  {/* <h3 className="font-semibold mb-1">{activeImages[currentImageIndex]?.title}</h3> */}
                   <p className="text-white/80 text-sm">
                     {currentImageIndex + 1} of {activeImages.length}
                   </p>
@@ -211,27 +292,35 @@ const Gallery = () => {
       {/* Hero Section */}
       <section className="py-24 pt-32 bg-gradient-to-br from-primary/5 to-secondary/5">
         <div className="container mx-auto px-4 text-center">
-          <div className="inline-flex items-center gap-2 bg-primary/10 backdrop-blur-sm border border-primary/20 rounded-full px-6 py-3 mb-6">
+          {/* <div className="inline-flex items-center gap-2 bg-primary/10 backdrop-blur-sm border border-primary/20 rounded-full px-6 py-3 mb-6">
             <Camera className="h-5 w-5 text-primary" />
             <span className="font-medium text-primary">Sacred Memories</span>
-          </div>
+          </div> */}
 
-          <h1 className="font-display text-4xl md:text-6xl font-bold text-foreground mb-6">Temple Gallery</h1>
+          <h1 className="font-display text-4xl md:text-6xl font-bold text-foreground mb-6">
+            मंदिर दर्शन गैलरी
+          </h1>
 
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Witness the divine beauty of our Navratri celebrations and sacred rituals
+            श्री सिद्ध बाबा धाम के दिव्य स्वरूप का अनुभव कीजिए। यहाँ मंदिर की सुंदरता एवं
+            नवरात्रि के उत्सव, हजारों दीपों की ज्योति,  और पावन
+            अनुष्ठानों के अनुपम दृश्य संग्रहीत हैं।
           </p>
         </div>
       </section>
 
       {/* Featured Events */}
-      <section className="py-20">
+      <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="mb-16">
-            <div className="text-center mb-12">
-              <h2 className="font-display text-3xl font-bold text-foreground mb-4">Featured Events</h2>
-              <p className="text-muted-foreground">Explore our most memorable celebrations</p>
-            </div>
+            {/* <div className="text-center mb-12">
+              <h2 className="font-display text-3xl font-bold text-foreground mb-4">
+                स्मरणीय क्षण
+              </h2>
+              <p className="text-muted-foreground">
+                Explore our most memorable celebrations
+              </p>
+            </div> */}
 
             <div className="grid md:grid-cols-3 gap-6 mb-12">
               {Object.entries(events).map(([key, event]) => (
@@ -245,10 +334,16 @@ const Gallery = () => {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                       <div className="absolute bottom-0 left-0 right-0 p-6">
-                        <h3 className="font-display text-xl font-bold text-white mb-2">{event.title}</h3>
-                        <p className="text-white/80 text-sm mb-3">{event.description}</p>
+                        <h3 className="font-display text-xl font-bold text-white mb-2">
+                          {event.title}
+                        </h3>
+                        <p className="text-white/80 text-sm mb-3">
+                          {event.description}
+                        </p>
                         <div className="flex items-center justify-between">
-                          <span className="text-white/70 text-xs">{event.images.length} photos</span>
+                          <span className="text-white/70 text-xs">
+                            {event.images.length} photos
+                          </span>
                           <ArrowRight className="h-4 w-4 text-white group-hover:translate-x-1 transition-transform" />
                         </div>
                       </div>
@@ -267,5 +362,3 @@ const Gallery = () => {
 };
 
 export default Gallery;
-
-
