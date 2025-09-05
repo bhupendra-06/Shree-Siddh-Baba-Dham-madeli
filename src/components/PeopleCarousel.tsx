@@ -2,6 +2,11 @@ import React, { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import noUser from "@/assets/no-user.jpg";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import one from "@/assets/one.png";
+import two from "@/assets/two.png";
+import three from "@/assets/three.jpg";
+import four from "@/assets/four.png";
+import five from "@/assets/five.jpg";
 
 interface Member {
   name: string;
@@ -9,11 +14,11 @@ interface Member {
 }
 
 const members: Member[] = [
-  { name: "Lokesh Sahu", image: noUser },
-  { name: "Mannu Lal Sahu", image: noUser },
-  { name: "Bhawna Sahu", image: noUser },
-  { name: "Lucky Sahu", image: noUser },
-  { name: "Heera Sahu", image: noUser },
+  { name: "Mannu Lal Sahu", image: three },
+  { name: "Lokesh Sahu", image: one },
+  { name: "Heera Sahu", image: five },
+  { name: "Lucky Sahu", image: two },
+  { name: "Bhawna Sahu", image: four },
 ];
 
 export default function PeopleCarousel() {
