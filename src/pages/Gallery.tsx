@@ -32,9 +32,9 @@ const Gallery = () => {
 
   // Event-based gallery
   const events = {
-    "navratri-2024": {
-      title: "Navratri 2024 Celebration",
-      description: "Nine divine nights of celebration and devotion",
+    "मंदिर दर्शन": {
+      title: "मंदिर दर्शन",
+      description: "शांत वातावरण और भक्ति से आलोकित मंदिर के अद्भुत दर्शन",
       images: [
         {
           src: g1,
@@ -117,29 +117,6 @@ const Gallery = () => {
     },
   };
 
-  const videos = [
-    {
-      type: "video",
-      thumbnail: templeHero,
-      title: "Navratri 2024 Highlights",
-      duration: "5:32",
-      views: "1.2K",
-    },
-    {
-      type: "video",
-      thumbnail: diyaLight,
-      title: "Diya Lighting Ceremony",
-      duration: "3:45",
-      views: "856",
-    },
-    {
-      type: "video",
-      thumbnail: diyaRows,
-      title: "Temple Morning Prayers",
-      duration: "8:15",
-      views: "2.1K",
-    },
-  ];
 
   const openLightbox = (imageSrc: string, images: any[], index: number) => {
     setSelectedImage(imageSrc);
