@@ -140,17 +140,13 @@ const DevoteeList = () => {
       {/* Hero Section */}
       <section className="py-24 pt-32 bg-gradient-to-br from-primary/5 to-secondary/5">
         <div className="container mx-auto px-4 text-center">
-          <div className="inline-flex items-center gap-2 bg-primary/10 backdrop-blur-sm border border-primary/20 rounded-full px-6 py-3 mb-6">
-            <Users className="h-5 w-5 text-primary" />
-            <span className="font-medium text-primary">Sacred Community</span>
-          </div>
 
           <h1 className="font-mono text-4xl md:text-3xl font-bold text-foreground mb-6">
             ज्योत जलाने वाले भक्तगण
           </h1>
 
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            हमारे पावन मंदिर में दिव्य ज्योति प्रज्वलित करने वाले श्रद्धालु भक्तों के धन्य समुदाय का विस्तृत विवरण देखें
+            हमारे पवित्र मंदिर में दिव्य ज्योति प्रज्वलित करने वाले श्रद्धालु भक्तों के धन्य समुदाय का विवरण
           </p>
 
           {/* Search Bar */}
@@ -168,7 +164,7 @@ const DevoteeList = () => {
           </div>
 
           {/* Filters (Mobile friendly dropdowns) */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex gap-4 justify-center">
             <Select
               value={selectedYear.toString()}
               onValueChange={(val) => setSelectedYear(Number(val))}
