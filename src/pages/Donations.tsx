@@ -5,20 +5,22 @@ import { Card } from "@/components/ui/card";
 import { Copy, Heart, Building, Users, Lightbulb } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import QrCode from "@/assets/qr-any-amount.jpg";
 
 const Donations = () => {
   const { toast } = useToast();
   const [copiedField, setCopiedField] = useState<string | null>(null);
 
   const bankDetails = {
-    accountName: "Siddh Baba Dham Madeli Trust",
-    accountNumber: "1234567890123456",
-    ifscCode: "SBIN0001234",
-    bankName: "State Bank of India",
-    branch: "Temple Road Branch"
+    accountName: "GIRIRAJ  NIRMALKAR",
+    accountNumber: "918010064188600",
+    ifscCode: "UTIB0001728",
+    bankName: "Axis Bank",
+    // branch: "Temple Road Branch"
   };
 
-  const upiId = "sidhbaba@paytm";
+  const upiId = "9009610596@axisbank";
+  const upiLink = "upi://pay?pa=9009610596@axisbank&pn=GIRIRAJ&cu=INR";
 
   const copyToClipboard = (text: string, field: string) => {
     navigator.clipboard.writeText(text);
@@ -138,7 +140,7 @@ const Donations = () => {
 
                 <div className="space-y-4">
                   <div className="bg-white p-4 rounded-lg border border-border/50">
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between gap-2">
                       <div>
                         <label className="text-sm font-medium text-muted-foreground">UPI ID</label>
                         <div className="text-foreground font-mono">{upiId}</div>
@@ -156,15 +158,17 @@ const Donations = () => {
                   </div>
 
                   <div className="bg-primary/10 p-4 rounded-lg text-center">
-                    <div className="w-32 h-32 bg-white rounded-lg mx-auto mb-4 flex items-center justify-center">
-                      <div className="text-primary font-bold">QR Code</div>
+                    <div className="w-52 h-52 bg-white rounded-lg mx-auto mb-4 flex items-center justify-center">
+                      <img src={QrCode} alt="UPI QR Code" className="w-full rounded-lg object-contain" />
                     </div>
                     <p className="text-sm text-muted-foreground">
                       Scan with any UPI app to donate
                     </p>
                   </div>
 
-                  <Button variant="temple" className="w-full">
+                  <Button variant="temple" className="w-full md:hidden" onClick={()=>{
+                    window.location.href = "upi://pay?pa=9009610596@axisbank&pn=GIRIRAJ&cu=INR";
+                  }}>
                     <Heart className="h-4 w-4" />
                     Pay with UPI
                   </Button>
@@ -208,10 +212,10 @@ const Donations = () => {
                     </div>
                   ))}
 
-                  <Button variant="temple" className="w-full">
+                  {/* <Button variant="temple" className="w-full">
                     <Building className="h-4 w-4" />
                     Bank Transfer Details
-                  </Button>
+                  </Button> */}
                 </div>
               </Card>
             </div>
