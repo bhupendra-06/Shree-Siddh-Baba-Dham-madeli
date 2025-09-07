@@ -274,7 +274,7 @@ const Gallery = () => {
             <span className="font-medium text-primary">Sacred Memories</span>
           </div> */}
 
-          <h1 className="font-display text-4xl md:text-6xl font-bold text-foreground mb-6">
+          <h1 className="font-display text-4xl md:text-3xl font-bold text-foreground mb-6">
             मंदिर दर्शन गैलरी
           </h1>
 
