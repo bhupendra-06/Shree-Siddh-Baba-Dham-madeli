@@ -68,13 +68,13 @@ const Gallery = () => {
         },
       ],
     },
-    "navratri-2023": {
-      title: "Navratri 2023 Memories",
+    "navratri-2024": {
+      title: "Navratri 2024 Memories",
       description: "Cherished moments from previous year's celebration",
       images: [
         {
           src: diyaRows,
-          title: "Grand Diya Display 2023",
+          title: "Grand Diya Display 2024",
           description: "Beautiful diya arrangements",
         },
         {
@@ -151,7 +151,7 @@ const Gallery = () => {
         <Header />
 
         {/* Event Header */}
-        <section className="py-24 pt-32 bg-gradient-to-br from-primary/5 to-secondary/5">
+        <section className="py-10 pt-20 bg-gradient-to-br from-primary/5 to-secondary/5">
           <div className="container mx-auto px-4">
             <Link
               to="/gallery"
@@ -173,13 +173,13 @@ const Gallery = () => {
         </section>
 
         {/* Event Gallery */}
-        <section className="py-16">
+        <section className="py-12">
           <div className="container mx-auto px-4">
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
               {event.images.map((image, index) => (
                 <Card
                   key={index}
-                  className="group relative overflow-hidden rounded-xl shadow-card hover:shadow-temple transition-all duration-300 cursor-pointer hover:scale-105"
+                  className="group relative overflow-hidden rounded-md shadow-card hover:shadow-temple transition-all duration-300 cursor-pointer hover:scale-105"
                   onClick={() => openLightbox(image.src, event.images, index)}
                 >
                   <div className="aspect-square relative">
@@ -211,7 +211,7 @@ const Gallery = () => {
               <img
                 src={selectedImage}
                 alt="Gallery Image"
-                className="max-w-full max-h-full object-contain rounded-lg mx-auto block"
+                className="max-w-full max-h-screen object-contain rounded-lg mx-auto block"
                 onClick={(e) => e.stopPropagation()}
               />
 
@@ -221,7 +221,7 @@ const Gallery = () => {
                   e.stopPropagation();
                   navigateImage("prev", activeImages);
                 }}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+                className="absolute left-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 md:backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
               >
                 <ArrowLeft className="h-6 w-6" />
               </button>
@@ -231,7 +231,7 @@ const Gallery = () => {
                   e.stopPropagation();
                   navigateImage("next", activeImages);
                 }}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+                className="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 md:backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
               >
                 <ArrowRight className="h-6 w-6" />
               </button>
@@ -239,17 +239,17 @@ const Gallery = () => {
               {/* Close Button */}
               <button
                 onClick={closeLightbox}
-                className="absolute top-4 right-4 w-10 h-10 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+                className="absolute top-2 right-2 w-10 h-10 text-xl md:text-2xl bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
               >
                 ×
               </button>
 
-              {/* Image Info */}
-              <div className="absolute bottom-4 left-4 right-4 w-fit mx-auto bg-black/50 backdrop-blur-sm rounded-lg p-4 text-white">
+              {/* Image Info & Number*/}
+              <div className="absolute bottom-2 md:bottom-0 left-4 right-4 w-fit mx-auto bg-black/50  rounded-sm p-2 text-white">
                 <div className="text-center">
                   {/* <h3 className="font-semibold mb-1">{activeImages[currentImageIndex]?.title}</h3> */}
                   <p className="text-white/80 text-sm">
-                    {currentImageIndex + 1} of {activeImages.length}
+                    {currentImageIndex + 1} / {activeImages.length}
                   </p>
                 </div>
               </div>
@@ -267,7 +267,7 @@ const Gallery = () => {
       <Header />
 
       {/* Hero Section */}
-      <section className="py-24 pt-32 bg-gradient-to-br from-primary/5 to-secondary/5">
+      <section className="py-10 pt-24 bg-gradient-to-br from-primary/5 to-secondary/5">
         <div className="container mx-auto px-4 text-center">
           {/* <div className="inline-flex items-center gap-2 bg-primary/10 backdrop-blur-sm border border-primary/20 rounded-full px-6 py-3 mb-6">
             <Camera className="h-5 w-5 text-primary" />
