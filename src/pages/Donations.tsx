@@ -80,10 +80,10 @@ const Donations = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
-              How Your Donation Helps
+              आपके दान से कैसे सहयोग मिलता है
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Every contribution, no matter the size, helps us continue our sacred mission
+              आपका हर योगदान, चाहे कितना ही छोटा क्यों न हो, हमारे मंदिर की दिव्य परंपराओं को जीवित रखता है और हमें भक्तों की सेवा के पथ पर आगे बढ़ाता है
             </p>
           </div>
 
