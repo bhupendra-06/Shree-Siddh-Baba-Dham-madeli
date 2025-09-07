@@ -11,7 +11,7 @@ export const Header = () => {
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
     { name: "Book Diya", href: "/book-diya" },
-    { name: "Devotees", href: "/devotees" },
+    { name: "Diya List", href: "/devotees" },
     { name: "Gallery", href: "/gallery" },
     { name: "Donate", href: "/donations" }
   ];

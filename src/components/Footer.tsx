@@ -34,7 +34,7 @@ export const Footer = () => {
             </div>
             <p className="text-muted-foreground leading-relaxed mb-6">
               नवरात्रि के शुभ अवसर पर आइए, दिव्य आशीर्वाद का अनुभव कीजिए। पिछले
-              20 वर्षों से हम भक्ति की राह को आलोकित कर रहे हैं और समाज को
+              20 वर्षों से हम भक्ति की राह को आलोकित कर रहे हैं और भक्तों को
               प्रार्थना व उत्सव में जोड़ रहे हैं।
             </p>
             <div className="flex gap-4">
@@ -112,7 +112,7 @@ export const Footer = () => {
                   Scan to donate via UPI
                 </p>
                 <p className="text-xs text-accent font-medium">
-                  7804827109@ybl
+                  9009610596@axisbank
                 </p>
               </div>
             </Card>
