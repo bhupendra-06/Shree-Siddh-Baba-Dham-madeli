@@ -2,7 +2,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Search, Users, MapPin, Flame } from "lucide-react"; // 🔥 replaced Phone with Flame for diya
+import { Search, Users, MapPin, Flame, Loader2 } from "lucide-react"; // 🔥 replaced Phone with Flame for diya
 import { useEffect, useState } from "react";
 import {
   Select,
@@ -138,15 +138,15 @@ const DevoteeList = () => {
       <Header />
 
       {/* Hero Section */}
-      <section className="py-24 pt-32 bg-gradient-to-br from-primary/5 to-secondary/5">
+      <section className="py-10 pt-24 bg-gradient-to-br from-primary/5 to-secondary/5">
         <div className="container mx-auto px-4 text-center">
-
           <h1 className="font-mono text-4xl md:text-3xl font-bold text-foreground mb-6">
             भक्तगण सूची
           </h1>
 
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            हमारे पवित्र मंदिर में दिव्य ज्योति प्रज्वलित करने वाले श्रद्धालु भक्तों के धन्य समुदाय का विवरण
+            हमारे पवित्र मंदिर में दिव्य ज्योति प्रज्वलित करने वाले श्रद्धालु
+            भक्तों के धन्य समुदाय का विवरण
           </p>
 
           {/* Search Bar */}
@@ -195,12 +195,15 @@ const DevoteeList = () => {
       </section>
 
       {/* Devotee List */}
-      <section className="py-20">
+      <section className="py-16">
         <div className="container mx-auto px-4">
           {loading ? (
-            <p className="text-center text-muted-foreground">
-              Loading devotees...
-            </p>
+            <div className="flex items-center justify-center h-32">
+              <Loader2 className="animate-spin text-amber-500 w-10 h-10" />
+              <span className="ml-2 text-amber-600 font-medium">
+                Loading list...
+              </span>
+            </div>
           ) : (
             <>
               <div className="text-center mb-8">
@@ -214,8 +217,12 @@ const DevoteeList = () => {
               <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {searchedDevotees.map((d, i) => {
                   // diya number from year and season filtered list
-                  const diyaIndex = filterByYearAndSeason.findIndex(dev => dev.id === d.id);
-                  return <DevoteeCard key={d.id} devotee={d} index={diyaIndex} />
+                  const diyaIndex = filterByYearAndSeason.findIndex(
+                    (dev) => dev.id === d.id
+                  );
+                  return (
+                    <DevoteeCard key={d.id} devotee={d} index={diyaIndex} />
+                  );
                 })}
               </div>
             </>

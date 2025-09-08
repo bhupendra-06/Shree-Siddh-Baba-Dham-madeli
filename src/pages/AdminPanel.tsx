@@ -204,12 +204,19 @@ export default function AdminPanel() {
             {loading ? (
               <tr>
                 <td colSpan={8} className="p-3 text-center text-gray-500">
-                  Loading bookings...
+                  <div className="grid gap-4 p-2">
+                    {Array.from({ length: 7 }).map((_, i) => (
+                      <div
+                        key={i}
+                        className="h-12 text-xl p-2 rounded-lg bg-gradient-to-r from-gray-200 to-gray-300 animate-pulse"
+                      ></div>
+                    ))}
+                  </div>
                 </td>
               </tr>
             ) : filtered.length === 0 ? (
               <tr>
-                <td colSpan={8} className="p-3 text-center text-gray-500">
+                <td colSpan={8} className="p-3 text-center text-xl text-gray-500">
                   No bookings found.
                 </td>
               </tr>
