@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
+import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 const AdminLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -49,7 +51,7 @@ const AdminLogin = () => {
     } catch (err) {
       setError("⚠️ Something went wrong. Please try again.");
       console.error("Login error: ", err);
-    }finally{
+    } finally {
       setLoading(false);
     }
   };
@@ -60,22 +62,53 @@ const AdminLogin = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-pink-50 to-purple-50 flex flex-col items-center justify-center">
-      <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 shadow-lg rounded-xl overflow-hidden bg-white">
+      <Link
+        to="/"
+        className="fixed top-2 left-2 inline-flex items-center gap-2 py-2 px-4 bg-primary/15 rounded-sm text-base font-semibold text-primary/80 hover:text-primary transition-colors mb-6"
+      >
+        <ArrowLeft className="h-4 w-4" />
+        <span className="hidden sm:inline-block">Back to Home</span>
+      </Link>
+      <div className="max-w-5xl grid grid-cols-1 md:grid-cols-2 shadow-lg rounded-xl overflow-hidden bg-white mx-8">
         {/* Left Section */}
-        <div className="hidden pt-24 md:flex flex-col justify-start items-start bg-gradient-to-br from-orange-500 to-yellow-400 text-white">
-          <div className="max-w-lg">
-            <h1 className="text-4xl text-center m-4 font-bold mb-3">
-              Shree Siddh Baba Dham <br /> Madeli
-            </h1>
-            <p className="px-10 text-center text-white/90 text-base leading-relaxed">
-              Welcome to the Admin Panel. Manage temple updates, events and
-              devotee details easily from here.
-            </p>
-          </div>
-        </div>
+{/* Left Section */}
+<div className="hidden md:flex flex-col justify-center items-center bg-gradient-to-br from-orange-600 to-yellow-500 text-white relative p-10">
+  {/* Subtle Overlay */}
+  <div className="absolute inset-0 bg-black/10"></div>
+
+  {/* Content */}
+  <div className="relative max-w-md text-center space-y-6">
+    {/* Icon / Symbol */}
+    <div className="flex justify-center">
+      <div className="bg-white/20 p-5 rounded-full shadow-lg">
+        <span className="text-5xl">🪔</span>
+      </div>
+    </div>
+
+    <h1 className="text-4xl font-bold leading-snug drop-shadow-md">
+      Shree Siddh Baba Dham <br /> <span className="text-yellow-200">Madeli</span>
+    </h1>
+
+    <p className="px-6 text-white/90 text-base leading-relaxed">
+      Welcome to the Admin Panel.  
+      Easily manage <span className="font-semibold">events</span>,  
+      <span className="font-semibold"> temple updates</span>, and  
+      <span className="font-semibold"> records</span>.
+    </p>
+
+    {/* Decorative Divider */}
+    <div className="w-20 h-1 mx-auto bg-yellow-300 rounded-full"></div>
+
+    {/* Quote */}
+    <p className="mt-6 bg-white/15 rounded-xl mx-auto px-6 py-3 w-fit text-sm shadow-lg backdrop-blur-md">
+      ✨ "Organization brings devotion closer" ✨
+    </p>
+  </div>
+</div>
+
 
         {/* Right Section */}
-        <div className="flex justify-center items-center p-16 md:m-8">
+        <div className="flex justify-center items-center p-8 sm:p-16 md:m-8">
           <div className="w-full max-w-sm">
             <h2 className="text-center text-2xl font-semibold text-gray-700 mb-6">
               Admin Login
@@ -91,14 +124,23 @@ const AdminLogin = () => {
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-400 outline-none"
                 required
               />
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-400 outline-none"
-                required
-              />
+              <div className="relative w-full">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-4 py-2 pr-10 border rounded-lg focus:ring-2 focus:ring-orange-400 outline-none"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700"
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
 
               <button
                 type="submit"
