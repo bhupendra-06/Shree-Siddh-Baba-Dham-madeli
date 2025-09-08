@@ -9,9 +9,10 @@ import {
   Facebook,
   Instagram,
   Youtube,
-  QrCode,
+  MessageCircle,
   Heart,
 } from "lucide-react";
+import QrCodeImage from "@/assets/qr-any-amount.jpg";
 
 export const Footer = () => {
   return (
@@ -53,11 +54,10 @@ export const Footer = () => {
                 <Instagram className="h-4 w-4" />
               </Button>
               <Button
-                variant="outline"
                 size="icon"
-                className="hover:bg-primary hover:text-white transition-all duration-300"
+                className="bg-gradient-to-r from-green-500 to-green-400 hover:text-white transition-all duration-300"
               >
-                <Youtube className="h-4 w-4" />
+                <MessageCircle className="h-4 w-4" />
               </Button>
             </div>
           </div>
@@ -107,9 +107,15 @@ export const Footer = () => {
             </h4>
             <Card className="p-4 bg-gradient-card border border-primary/20 shadow-card">
               <div className="text-center">
-                <QrCode className="h-16 w-16 mx-auto text-primary mb-3" />
+                <div className="w-28 h-28 bg-white rounded-lg mx-auto mb-4 flex items-center justify-center">
+                  <img
+                    src={QrCodeImage}
+                    alt="UPI QR Code"
+                    className="w-full rounded-lg object-contain"
+                  />
+                </div>
                 <p className="text-sm text-muted-foreground mb-3">
-                  Scan to donate via UPI
+                  UPI से दान करने हेतु स्कैन करें
                 </p>
                 <p className="text-xs text-accent font-medium">
                   9009610596@axisbank
@@ -132,17 +138,10 @@ export const Footer = () => {
         <div className="border-t border-border pt-6 text-center">
           <p className="text-sm text-muted-foreground mb-2">
             ©{new Date().getFullYear()} Shree Siddh Baba Dham Madeli. All rights
-            reserved. |
-            <a href="/" className="hover:text-primary transition-colors ml-1">
-              Privacy Policy
-            </a>
-            |
-            <a href="/" className="hover:text-primary transition-colors ml-1">
-              Terms of Service
-            </a>
+            reserved.{" "}
           </p>
           <p className="text-xs text-muted-foreground">
-            Made with ❤️ for our devotee community
+            Designed & developed by <a href="https://www.cammellia.in" className="text-blue-600/75 font-semibold">Cammellia.in</a>
           </p>
         </div>
       </div>
