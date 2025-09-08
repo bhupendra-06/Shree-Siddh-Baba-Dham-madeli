@@ -36,48 +36,52 @@ const Donations = () => {
     {
       icon: Lightbulb,
       title: "Diya Oil/Ghee & Supplies",
-      description: "Support the procurement of sacred oil, wicks, and supplies for our daily diya lighting rituals.",
-      amount: "Oil - ₹751 / Ghee - ₹2151"
+      description:
+        "Support the procurement of sacred oil, wicks, and supplies for our daily diya lighting rituals.",
+      amount: "Oil - ₹751 / Ghee - ₹2151",
     },
     {
       icon: Building,
       title: "Temple Maintenance",
-      description: "Help maintain our sacred temple premises, cleanliness, and infrastructure improvements.",
-      amount: "₹5001"
+      description:
+        "Help maintain our sacred temple premises, cleanliness, and infrastructure improvements.",
+      amount: "₹5001",
     },
     {
       icon: Users,
       title: "Bhojan Prashad",
-      description: "Support free meals, prashad for pilgrims, and community welfare programs.",
-      amount: "₹10001"
+      description:
+        "Support free meals, prashad for pilgrims, and community welfare programs.",
+      amount: "₹10001",
     },
     {
       icon: Heart,
       title: "General Donation",
-      description: "Contribute to the overall functioning and spiritual activities of the temple.",
-      amount: "Any Amount"
-    }
+      description:
+        "Contribute to the overall functioning and spiritual activities of the temple.",
+      amount: "Any Amount",
+    },
   ];
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       {/* Hero Section */}
-      <section className="py-24 pt-32 bg-gradient-to-br from-primary/5 to-secondary/5">
+      <section className="py-10 pt-24 bg-gradient-to-br from-primary/5 to-secondary/5">
         <div className="container mx-auto px-4 text-center">
-          
           <h1 className="font-display text-4xl md:text-3xl font-bold text-foreground mb-6">
             हमारे मंदिर का सहयोग करें
           </h1>
-          
+
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            आपकी उदारता हमें हमारी दिव्य परंपराओं को संजोए रखने और भक्तों की सेवा में निरंतर समर्पित रहने की शक्ति देती है
+            आपकी उदारता हमें हमारी दिव्य परंपराओं को संजोए रखने और भक्तों की
+            सेवा में निरंतर समर्पित रहने की शक्ति देती है
           </p>
         </div>
       </section>
 
-      {/* Donation Purposes */}
+      {/* Donation Purposes
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -108,10 +112,10 @@ const Donations = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Payment Methods */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-12 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
@@ -140,16 +144,24 @@ const Donations = () => {
 
                 <div className="space-y-4">
                   <div className="bg-white p-4 rounded-lg border border-border/50">
-                    <div className="flex items-center justify-between gap-2">
-                      <div>
-                        <label className="text-sm font-medium text-muted-foreground">UPI ID</label>
-                        <div className="text-foreground font-mono">{upiId}</div>
+                    <div className="relative flex items-center justify-end gap-2">
+                      <div className="absolute left-0">
+                        <label className="text-sm font-medium text-gray-600/75">
+                          UPI ID
+                        </label>
+                        <div className="font-mono text-sm break-words">
+                          {upiId}
+                        </div>
                       </div>
                       <Button
                         variant="outline"
                         size="sm"
                         onClick={() => copyToClipboard(upiId, "UPI ID")}
-                        className={copiedField === "UPI ID" ? "bg-green-100 text-green-700" : ""}
+                        className={
+                          copiedField === "UPI ID"
+                            ? "bg-green-100 text-green-700"
+                            : ""
+                        }
                       >
                         <Copy className="h-4 w-4" />
                         {copiedField === "UPI ID" ? "Copied!" : "Copy"}
@@ -158,17 +170,26 @@ const Donations = () => {
                   </div>
 
                   <div className="bg-primary/10 p-4 rounded-lg text-center">
-                    <div className="w-52 h-52 bg-white rounded-lg mx-auto mb-4 flex items-center justify-center">
-                      <img src={QrCode} alt="UPI QR Code" className="w-full rounded-lg object-contain" />
+                    <div className="w-24 h-24 bg-white rounded-lg mx-auto mb-4 flex items-center justify-center">
+                      <img
+                        src={QrCode}
+                        alt="UPI QR Code"
+                        className="w-full rounded-lg object-contain"
+                      />
                     </div>
                     <p className="text-sm text-muted-foreground">
                       Scan with any UPI app to donate
                     </p>
                   </div>
 
-                  <Button variant="temple" className="w-full md:hidden" onClick={()=>{
-                    window.location.href = "upi://pay?pa=9009610596@axisbank&pn=GIRIRAJ&cu=INR";
-                  }}>
+                  <Button
+                    variant="temple"
+                    className="w-full md:hidden"
+                    onClick={() => {
+                      window.location.href =
+                        "upi://pay?pa=9009610596@axisbank&pn=GIRIRAJ&cu=INR";
+                    }}
+                  >
                     <Heart className="h-4 w-4" />
                     Pay with UPI
                   </Button>
@@ -191,19 +212,28 @@ const Donations = () => {
 
                 <div className="space-y-4">
                   {Object.entries(bankDetails).map(([key, value]) => (
-                    <div key={key} className="bg-white p-4 rounded-lg border border-border/50">
+                    <div
+                      key={key}
+                      className="bg-white p-4 rounded-lg border border-border/50"
+                    >
                       <div className="flex items-center justify-between">
                         <div>
                           <label className="text-sm font-medium text-muted-foreground capitalize">
-                            {key.replace(/([A-Z])/g, ' $1').trim()}
+                            {key.replace(/([A-Z])/g, " $1").trim()}
                           </label>
-                          <div className="text-foreground font-mono break-all">{value}</div>
+                          <div className="text-foreground font-mono break-all">
+                            {value}
+                          </div>
                         </div>
                         <Button
                           variant="outline"
                           size="sm"
                           onClick={() => copyToClipboard(value, key)}
-                          className={copiedField === key ? "bg-green-100 text-green-700" : ""}
+                          className={
+                            copiedField === key
+                              ? "bg-green-100 text-green-700"
+                              : ""
+                          }
                         >
                           <Copy className="h-4 w-4" />
                           {copiedField === key ? "Copied!" : "Copy"}
@@ -211,16 +241,12 @@ const Donations = () => {
                       </div>
                     </div>
                   ))}
-
-                  {/* <Button variant="temple" className="w-full">
-                    <Building className="h-4 w-4" />
-                    Bank Transfer Details
-                  </Button> */}
                 </div>
               </Card>
             </div>
 
             {/* Important Note */}
+
             <Card className="mt-12 p-8 bg-gradient-primary text-white border-0 shadow-temple">
               <div className="text-center">
                 <Heart className="h-12 w-12 mx-auto mb-4" />
@@ -228,8 +254,10 @@ const Donations = () => {
                   Your Donation Makes a Difference
                 </h3>
                 <p className="text-white/90 max-w-2xl mx-auto leading-relaxed">
-                  All donations are used for temple maintenance, community services, and preserving our sacred traditions. 
-                  You will receive a confirmation receipt and blessing certificate via WhatsApp or email after your donation.
+                  All donations are used for temple maintenance, community
+                  services, and preserving our sacred traditions. You will
+                  receive a confirmation receipt and blessing certificate via
+                  WhatsApp or email after your donation.
                 </p>
               </div>
             </Card>
