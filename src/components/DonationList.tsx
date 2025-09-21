@@ -1,13 +1,13 @@
 import React from "react";
 
-// Sample data
+// Donation list
 const donations = [
   { name: "Chumman Dhruw", address: "Madeli", phone: "8463051414", donation: "151 ₹" },
-  { name: "Komal Sahu", address: "Bamhani", phone: "9981072975", donation: "7001 ₹" },
-  { name: "Giriraj Nirmalkar", address: "Madeli", phone: "9009610596", donation: "2mm Wire (50 mtr)" },
+  { name: "Komal Sahu", address: "Bamhani", phone: "9981072975", donation: "751 ₹" },
   { name: "Semamtika, Ishita Diwan", address: "Khadma", phone: "9098361861", donation: "1100 ₹" },
-
-//   Add more donations as needed
+  { name: "Bhanupratap Dhruw", address: "Korasi", phone: "9669978059", donation: "551 ₹" },
+  { name: "Bhupendra Dhruw", address: "Korasi", phone: "9202337515", donation: "751 ₹" },
+  { name: "Akash Vani Sahu", address: "Patharri, Rajim", phone: "7000966997", donation: "2001 ₹" },
 ];
 
 
