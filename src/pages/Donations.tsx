@@ -6,6 +6,7 @@ import { Copy, Heart, Building, Users, Lightbulb } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import QrCode from "@/assets/qr-any-amount.jpg";
+import DonationsList from "@/components/DonationList";
 
 const Donations = () => {
   const { toast } = useToast();
@@ -68,7 +69,7 @@ const Donations = () => {
       <Header />
 
       {/* Hero Section */}
-      <section className="py-10 pt-24 bg-gradient-to-br from-primary/5 to-secondary/5">
+      <section className="py-10 pt-24 sm:mb-10 bg-gradient-to-br from-primary/5 to-secondary/5">
         <div className="container mx-auto px-4 text-center">
           <h1 className="font-display text-4xl md:text-3xl font-bold text-foreground mb-6">
             मंदिर का सहयोग करें
@@ -81,8 +82,11 @@ const Donations = () => {
         </div>
       </section>
 
-      {/* Donation Purposes
-      <section className="py-20">
+      <DonationsList />
+
+      {/* Donation Purposes */}
+
+      {/* <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -118,7 +122,7 @@ const Donations = () => {
       <section className="py-12 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
+            <div className="text-center mb-8">
               <h2 className="font-display text-3xl font-bold text-foreground mb-4">
                 Donation Methods
               </h2>
@@ -127,7 +131,7 @@ const Donations = () => {
               </p>
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-8">
+            <div className="grid lg:grid-cols-2 gap-8 mb-10">
               {/* UPI Payment */}
               <Card className="p-8 bg-gradient-card border-0 shadow-card hover:shadow-temple transition-all duration-300">
                 <div className="text-center mb-6">
@@ -244,23 +248,6 @@ const Donations = () => {
                 </div>
               </Card>
             </div>
-
-            {/* Important Note */}
-
-            <Card className="mt-12 p-8 bg-gradient-primary text-white border-0 shadow-temple">
-              <div className="text-center">
-                <Heart className="h-12 w-12 mx-auto mb-4" />
-                <h3 className="font-display text-2xl font-bold mb-4">
-                  Your Donation Makes a Difference
-                </h3>
-                <p className="text-white/90 max-w-2xl mx-auto leading-relaxed">
-                  All donations are used for temple maintenance, community
-                  services, and preserving our sacred traditions. You will
-                  receive a confirmation receipt and blessing certificate via
-                  WhatsApp or email after your donation.
-                </p>
-              </div>
-            </Card>
           </div>
         </div>
       </section>
