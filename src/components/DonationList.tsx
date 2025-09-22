@@ -2,14 +2,49 @@ import React from "react";
 
 // Donation list
 const donations = [
-  { name: "Chumman Dhruw", address: "Madeli", phone: "8463051414", donation: "151 ₹" },
-  { name: "Komal Sahu", address: "Bamhani", phone: "9981072975", donation: "751 ₹" },
-  { name: "Semamtika, Ishita Diwan", address: "Khadma", phone: "9098361861", donation: "1100 ₹" },
-  { name: "Bhanupratap Dhruw", address: "Korasi", phone: "9669978059", donation: "551 ₹" },
-  { name: "Bhupendra Dhruw", address: "Korasi", phone: "9202337515", donation: "751 ₹" },
-  { name: "Akash Vani Sahu", address: "Patharri, Rajim", phone: "7000966997", donation: "2001 ₹" },
+  {
+    name: "Chumman Dhruw",
+    address: "Madeli",
+    phone: "8463051414",
+    donation: "151 ₹",
+  },
+  {
+    name: "Komal Sahu",
+    address: "Bamhani",
+    phone: "9981072975",
+    donation: "751 ₹",
+  },
+  {
+    name: "Semamtika, Ishita Diwan",
+    address: "Khadma",
+    phone: "9098361861",
+    donation: "1100 ₹",
+  },
+  {
+    name: "Bhanupratap Dhruw",
+    address: "Korasi",
+    phone: "9669978059",
+    donation: "551 ₹",
+  },
+  {
+    name: "Bhupendra Dhruw",
+    address: "Korasi",
+    phone: "9202337515",
+    donation: "751 ₹",
+  },
+  {
+    name: "Akash Vani Sahu",
+    address: "Patharri, Rajim",
+    phone: "7000966997",
+    donation: "2001 ₹",
+  },
+  {
+    name: "Pallavi Dhruw",
+    address: "Nayapara, Madeli",
+    phone: "6260878356",
+    donation: "501 ₹",
+  },
 ];
-
 
 const DonationsList = () => {
   return (
