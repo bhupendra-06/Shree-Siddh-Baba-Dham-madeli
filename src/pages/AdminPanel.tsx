@@ -23,8 +23,6 @@ import * as XLSX from "xlsx-js-style";
 import { saveAs } from "file-saver";
 // import * as XLSXStyle from "xlsx-style";
 
-
-
 export default function AdminPanel() {
   const [bookings, setBookings] = useState<any[]>([]);
   const [search, setSearch] = useState("");
@@ -133,76 +131,76 @@ export default function AdminPanel() {
     );
   });
 
+  const exportToExcel = () => {
+    const rows = bookings.map((b, i) => ({
+      "No.": i + 1,
+      Name: b.name,
+      Address: b.address,
+      "Contact No.": b.contactNumber,
+      WhatsApp: b.whatsappNumber,
+      "Diya Type": b.diyaType,
+      Payment: b.paymentStatus === "PAID" ? "Approved" : "Pending",
+    }));
 
+    // Create worksheet
+    const worksheet = XLSX.utils.json_to_sheet(rows);
 
+    // Title
+    XLSX.utils.sheet_add_aoa(worksheet, [["Diya Bookings Report"]], {
+      origin: "A1",
+    });
+    worksheet["!merges"] = [
+      { s: { r: 0, c: 0 }, e: { r: 0, c: Object.keys(rows[0]).length - 1 } },
+    ];
 
+    // Style Title
+    worksheet["A1"].s = {
+      font: { bold: true, sz: 16, color: { rgb: "FFFFFF" } },
+      alignment: { horizontal: "center", vertical: "center" },
+      fill: { fgColor: { rgb: "FF6600" } },
+    };
 
-const exportToExcel = () => {
-  const rows = bookings.map((b, i) => ({
-    "No.": i + 1,
-    Name: b.name,
-    Address: b.address,
-    "Contact No.": b.contactNumber,
-    WhatsApp: b.whatsappNumber,
-    "Diya Type": b.diyaType,
-    Payment: b.paymentStatus === "PAID" ? "Approved" : "Pending",
-  }));
+    // Style Headers
+    Object.keys(rows[0]).forEach((key, colIndex) => {
+      const cellRef = XLSX.utils.encode_cell({ r: 1, c: colIndex });
+      if (worksheet[cellRef]) {
+        worksheet[cellRef].s = {
+          font: { bold: true, color: { rgb: "FFFFFF" } },
+          alignment: { horizontal: "center", vertical: "center" },
+          fill: { fgColor: { rgb: "FFA500" } },
+          border: {
+            top: { style: "thin", color: { rgb: "000000" } },
+            bottom: { style: "thin", color: { rgb: "000000" } },
+            left: { style: "thin", color: { rgb: "000000" } },
+            right: { style: "thin", color: { rgb: "000000" } },
+          },
+        };
+      }
+    });
 
-  // Create worksheet
- const worksheet = XLSX.utils.json_to_sheet(rows);
+    // Auto column widths
+    worksheet["!cols"] = Object.keys(rows[0]).map((key) => ({
+      wch:
+        Math.max(
+          key.length,
+          ...rows.map((row) => String(row[key] || "").length)
+        ) + 2,
+    }));
 
+    // Create workbook
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Bookings");
 
-  // Title
-  XLSX.utils.sheet_add_aoa(worksheet, [["Diya Bookings Report"]], { origin: "A1" });
-  worksheet["!merges"] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: Object.keys(rows[0]).length - 1 } }];
-
-  // Style Title
-  worksheet["A1"].s = {
-    font: { bold: true, sz: 16, color: { rgb: "FFFFFF" } },
-    alignment: { horizontal: "center", vertical: "center" },
-    fill: { fgColor: { rgb: "FF6600" } },
+    // Save
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+      cellStyles: true,
+    });
+    const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
+    saveAs(blob, `Bookings_${new Date().toISOString().slice(0, 10)}.xlsx`);
   };
 
-  // Style Headers
-  Object.keys(rows[0]).forEach((key, colIndex) => {
-    const cellRef = XLSX.utils.encode_cell({ r: 1, c: colIndex });
-    if (worksheet[cellRef]) {
-      worksheet[cellRef].s = {
-        font: { bold: true, color: { rgb: "FFFFFF" } },
-        alignment: { horizontal: "center", vertical: "center" },
-        fill: { fgColor: { rgb: "FFA500" } },
-        border: {
-          top: { style: "thin", color: { rgb: "000000" } },
-          bottom: { style: "thin", color: { rgb: "000000" } },
-          left: { style: "thin", color: { rgb: "000000" } },
-          right: { style: "thin", color: { rgb: "000000" } },
-        },
-      };
-    }
-  });
-
-  // Auto column widths
-  worksheet["!cols"] = Object.keys(rows[0]).map((key) => ({
-    wch: Math.max(
-      key.length,
-      ...rows.map((row) => String(row[key] || "").length)
-    ) + 2,
-  }));
-
-  // Create workbook
-  const workbook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(workbook, worksheet, "Bookings");
-
-  // Save
-  const excelBuffer = XLSX.write(workbook, {
-    bookType: "xlsx",
-    type: "array",
-    cellStyles: true,
-  });
-  const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
-  saveAs(blob, `Bookings_${new Date().toISOString().slice(0, 10)}.xlsx`);
-};
-  
   return (
     <div className="min-h-screen w-full bg-gradient-to-r from-orange-50 via-pink-50 to-purple-50 mt-14 p-4 px-0">
       {/* Header */}
@@ -268,8 +266,6 @@ const exportToExcel = () => {
         >
           Export to Excel
         </Button>
-
-        
       </div>
 
       {/* Table */}
@@ -303,7 +299,10 @@ const exportToExcel = () => {
               </tr>
             ) : filtered.length === 0 ? (
               <tr>
-                <td colSpan={8} className="p-3 text-center text-xl text-gray-500">
+                <td
+                  colSpan={8}
+                  className="p-3 text-center text-xl text-gray-500"
+                >
                   No bookings found.
                 </td>
               </tr>
@@ -316,15 +315,34 @@ const exportToExcel = () => {
                   <td className="p-3 border-x text-center">{index + 1}.</td>
                   <td className="p-3 px-6 font-medium">{b.name}</td>
                   <td className="p-3">{b.address}</td>
-                  <td className="p-3 text-blue-600">{b.contactNumber}</td>
-                  <td className="p-3 text-blue-600">{b.whatsappNumber}</td>
+                  <td className="p-3 text-blue-600">
+                    <a
+                      href={`tel:+91${b.contactNumber}`}
+                      className="hover:underline"
+                    >
+                      {b.contactNumber}
+                    </a>
+                  </td>
+
+                  <td className="p-3 text-green-600">
+                    <a
+                      href={`https://wa.me/91${b.whatsappNumber}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:underline"
+                    >
+                      {b.whatsappNumber}
+                    </a>
+                  </td>
+
                   <td className="p-3">{b.diyaType}</td>
                   <td className="p-3">
                     <Badge
-                      className={`px-3 py-1 whitespace-nowrap rounded-full text-xs font-semibold hover:bg-transparent ${b.paymentStatus === "PAID"
-                        ? "bg-green-100 text-green-700 border border-green-300"
-                        : "bg-yellow-100 text-yellow-700 border border-yellow-300"
-                        }`}
+                      className={`px-3 py-1 whitespace-nowrap rounded-full text-xs font-semibold hover:bg-transparent ${
+                        b.paymentStatus === "PAID"
+                          ? "bg-green-100 text-green-700 border border-green-300"
+                          : "bg-yellow-100 text-yellow-700 border border-yellow-300"
+                      }`}
                     >
                       {b.paymentStatus === "PAID" ? "Approved ✔" : "Pending.. "}
                     </Badge>
