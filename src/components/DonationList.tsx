@@ -44,6 +44,12 @@ const donations = [
     phone: "6260878356",
     donation: "501 ₹",
   },
+  {
+    name: "Kanha Nishad",
+    address: "Dhaneli, Raipur",
+    phone: "8109671567",
+    donation: "501 ₹",
+  },
 ];
 
 const DonationsList = () => {
