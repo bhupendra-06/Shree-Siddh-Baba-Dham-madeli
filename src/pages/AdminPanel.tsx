@@ -26,6 +26,9 @@ import { saveAs } from "file-saver";
 export default function AdminPanel() {
   const [bookings, setBookings] = useState<any[]>([]);
   const [search, setSearch] = useState("");
+  const [year, setYear] = useState("");
+  const [season, setSeason] = useState("CHAITRA");
+
   const [loading, setLoading] = useState(true);
   const [approvingId, setApprovingId] = useState<string | null>(null);
 
@@ -50,7 +53,10 @@ export default function AdminPanel() {
         const data = await res.json();
         if (Array.isArray(data)) {
           setBookings(data);
-          console.log(data);
+          if (data.length > 0) {
+            const latestYear = Math.max(...data.map((b) => b.year));
+            setYear((prevYear) => (prevYear ? prevYear : String(latestYear)));
+          }
         } else {
           console.error("Unexpected response:", data);
         }
@@ -61,6 +67,8 @@ export default function AdminPanel() {
       }
     };
     fetchDevotees();
+    const interval = setInterval(fetchDevotees, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   // ✅ Approve Payment
@@ -125,20 +133,30 @@ export default function AdminPanel() {
   const filtered = bookings.filter((b) => {
     const query = search.toLowerCase().trim();
     return (
-      b.name.toLowerCase().includes(query) ||
-      String(b.whatsappNumber).toLowerCase().includes(query) ||
-      String(b.contactNumber).toLowerCase().includes(query)
+      (b.name.toLowerCase().includes(query) ||
+        String(b.whatsappNumber).toLowerCase().includes(query) ||
+        String(b.contactNumber).toLowerCase().includes(query)) &&
+      (year ? b.year == year : true) &&
+      (season ? b.season === season : true)
     );
   });
 
+  const uniqueYears = Array.from(new Set(bookings.map((b) => b.year))).sort(
+    (a, b) => b - a
+  );
+  const uniqueSeasons = Array.from(new Set(bookings.map((b) => b.season)));
+
+
   const exportToExcel = () => {
-    const rows = bookings.map((b, i) => ({
+    const rows = filtered.map((b, i) => ({
       "No.": i + 1,
       Name: b.name,
       Address: b.address,
       "Contact No.": b.contactNumber,
       WhatsApp: b.whatsappNumber,
       "Diya Type": b.diyaType,
+      Season: b.season,
+      Year: b.year,
       Payment: b.paymentStatus === "PAID" ? "Approved" : "Pending",
     }));
 
@@ -146,9 +164,13 @@ export default function AdminPanel() {
     const worksheet = XLSX.utils.json_to_sheet(rows);
 
     // Title
-    XLSX.utils.sheet_add_aoa(worksheet, [["Diya Bookings Report"]], {
-      origin: "A1",
-    });
+    XLSX.utils.sheet_add_aoa(
+      worksheet,
+      [[`Diya Bookings Report for ${season} ${year}`]],
+      {
+        origin: "A1",
+      }
+    );
     worksheet["!merges"] = [
       { s: { r: 0, c: 0 }, e: { r: 0, c: Object.keys(rows[0]).length - 1 } },
     ];
@@ -256,7 +278,30 @@ export default function AdminPanel() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <Search className="text-gray-500 absolute right-2" />
+        <select
+          value={year}
+          onChange={(e) => setYear(e.target.value)}
+          className="p-2 border rounded-md"
+        >
+          {uniqueYears.map((y) => (
+            <option key={y} value={y}>
+              {y}
+            </option>
+          ))}
+        </select>
+        <select
+          value={season}
+          onChange={(e) => setSeason(e.target.value)}
+          className="p-2 border rounded-md"
+        >
+          <option value="">All Seasons</option>
+          {uniqueSeasons.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
+        {/* <Search className="text-gray-500 absolute right-2" /> */}
       </div>
 
       <div className="flex justify-center md:justify-end gap-2 mb-4 lg:mx-10">
@@ -273,20 +318,20 @@ export default function AdminPanel() {
         <table className="min-w-full text-left border-collapse">
           <thead className="bg-orange-100 text-gray-700">
             <tr>
-              <th className="p-3 w-10 border-r">No.</th>
-              <th className="p-3 px-6 min-w-36">Name</th>
-              <th className="p-3">Address</th>
-              <th className="p-3">Contact No.</th>
-              <th className="p-3">WhatsApp</th>
-              <th className="p-3 min-w-28">Diya Type</th>
-              <th className="p-3">Payment</th>
-              <th className="p-3 min-w-52 md:w-24 text-center">Action</th>
+              <th className="p-4 w-10 border-r">No.</th>
+              <th className="p-4 px-6 min-w-36">Name</th>
+              <th className="p-4">Address</th>
+              <th className="p-4">Contact No.</th>
+              <th className="p-4">WhatsApp</th>
+              <th className="p-4 min-w-28">Diya Type</th>
+              <th className="p-4">Payment</th>
+              <th className="p-4 min-w-52 md:w-24 text-center">Action</th>
             </tr>
           </thead>
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan={8} className="p-3 text-center text-gray-500">
+                <td colSpan={8} className="p-4 text-center text-gray-500">
                   <div className="grid gap-4 p-2">
                     {Array.from({ length: 7 }).map((_, i) => (
                       <div
@@ -301,7 +346,7 @@ export default function AdminPanel() {
               <tr>
                 <td
                   colSpan={8}
-                  className="p-3 text-center text-xl text-gray-500"
+                  className="p-4 text-center text-xl text-gray-500"
                 >
                   No bookings found.
                 </td>
@@ -312,10 +357,10 @@ export default function AdminPanel() {
                   key={b._id || b.id}
                   className="border-b hover:bg-orange-50 transition-colors"
                 >
-                  <td className="p-3 border-x text-center">{index + 1}.</td>
-                  <td className="p-3 px-6 font-medium">{b.name}</td>
-                  <td className="p-3">{b.address}</td>
-                  <td className="p-3 text-blue-600">
+                  <td className="p-4 border-x text-center">{index + 1}.</td>
+                  <td className="p-4 px-6 font-medium">{b.name}</td>
+                  <td className="p-4">{b.address}</td>
+                  <td className="p-4 text-blue-600">
                     <a
                       href={`tel:+91${b.contactNumber}`}
                       className="hover:underline"
@@ -324,7 +369,7 @@ export default function AdminPanel() {
                     </a>
                   </td>
 
-                  <td className="p-3 text-green-600">
+                  <td className="p-4 text-green-600">
                     <a
                       href={`https://wa.me/91${b.whatsappNumber}`}
                       target="_blank"
@@ -335,8 +380,8 @@ export default function AdminPanel() {
                     </a>
                   </td>
 
-                  <td className="p-3">{b.diyaType}</td>
-                  <td className="p-3">
+                  <td className="p-4">{b.diyaType}</td>
+                  <td className="p-4">
                     <Badge
                       className={`px-3 py-1 whitespace-nowrap rounded-full text-xs font-semibold hover:bg-transparent ${
                         b.paymentStatus === "PAID"
@@ -347,7 +392,7 @@ export default function AdminPanel() {
                       {b.paymentStatus === "PAID" ? "Approved ✔" : "Pending.. "}
                     </Badge>
                   </td>
-                  <td className="p-3 text-center flex">
+                  <td className="p-4 text-center flex">
                     {b.paymentStatus !== "PAID" ? (
                       <Button
                         onClick={() => approvePayment(b._id || b.id)}
