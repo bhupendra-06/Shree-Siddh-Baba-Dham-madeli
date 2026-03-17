@@ -20,8 +20,21 @@ const Donations = () => {
     // branch: "Temple Road Branch"
   };
 
+  const generateTxnId = () => {
+    return "DON" + Date.now();
+  };
   const upiId = "9009610596@axisbank";
-  const upiLink = "upi://pay?pa=9009610596@axisbank&pn=GIRIRAJ&cu=INR";
+  const createUpiLink = (amount?: number) => {
+    const txnId = generateTxnId();
+
+    let link = `upi://pay?pa=${upiId}&pn=GIRIRAJ&cu=INR&tr=${txnId}&tn=TempleDonation`;
+
+    if (amount) {
+      link += `&am=${amount}`;
+    }
+
+    return link;
+  };
 
   const copyToClipboard = (text: string, field: string) => {
     navigator.clipboard.writeText(text);
@@ -190,8 +203,8 @@ const Donations = () => {
                     variant="temple"
                     className="w-full md:hidden"
                     onClick={() => {
-                      window.location.href =
-                        "upi://pay?pa=9009610596@axisbank&pn=GIRIRAJ&cu=INR";
+                      const upiLink = createUpiLink(); // no fixed amount
+                      window.location.href = upiLink;
                     }}
                   >
                     <Heart className="h-4 w-4" />
