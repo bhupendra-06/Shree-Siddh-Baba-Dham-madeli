@@ -6,7 +6,7 @@ import templeHero from "@/assets/temple-hero.jpg";
 
 export const HeroSection = () => {
   // Navratri 2024 dates - adjust as needed
-  const navratriDate = new Date("2025-09-22");
+  const navratriDate = new Date("2026-03-19");
 
   return (
     <section
