@@ -1,5 +1,5 @@
 import React from "react";
-
+ 
 // Donation list
 const donations = [
   {
@@ -49,6 +49,12 @@ const donations = [
     address: "Dhaneli, Raipur",
     phone: "8109671567",
     donation: "501 ₹",
+  },
+    {
+    name: "Hitesh Patel",
+    address: "Onwa",
+    phone: "6265644983",
+    donation: "2100 ₹",
   },
 ];
 
