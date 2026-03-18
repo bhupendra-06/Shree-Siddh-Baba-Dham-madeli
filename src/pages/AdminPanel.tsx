@@ -10,11 +10,19 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Flame, Search, LogOut } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate, Link } from "react-router-dom";
@@ -23,14 +31,29 @@ import * as XLSX from "xlsx-js-style";
 import { saveAs } from "file-saver";
 // import * as XLSXStyle from "xlsx-style";
 
+interface Booking {
+  _id: string;
+  id: string;
+  name: string;
+  address: string;
+  contactNumber: string;
+  whatsappNumber: string;
+  diyaType: string;
+  paymentStatus: "PAID" | "PENDING";
+  year: number;
+  season: "CHAITRA" | "SHARDIYA";
+}
+
 export default function AdminPanel() {
-  const [bookings, setBookings] = useState<any[]>([]);
+  const [bookings, setBookings] = useState<Booking[]>([]);
   const [search, setSearch] = useState("");
   const [year, setYear] = useState("");
   const [season, setSeason] = useState("CHAITRA");
 
   const [loading, setLoading] = useState(true);
   const [approvingId, setApprovingId] = useState<string | null>(null);
+  const [isImporting, setIsImporting] = useState(false);
+  const [selectedBookings, setSelectedBookings] = useState<string[]>([]);
 
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -127,6 +150,107 @@ export default function AdminPanel() {
   const handleLogout = () => {
     localStorage.removeItem("adminToken");
     navigate("/admin-login");
+  };
+
+  const handleSelectBooking = (id: string) => {
+    setSelectedBookings((prev) =>
+      prev.includes(id) ? prev.filter((bId) => bId !== id) : [...prev, id]
+    );
+  };
+
+  const handleSelectAll = () => {
+    if (selectedBookings.length === filtered.length) {
+      setSelectedBookings([]);
+    } else {
+      setSelectedBookings(filtered.map((b) => b._id || b.id));
+    }
+  };
+
+  const getSeason = () => {
+    const month = new Date().getMonth() + 1; // getMonth() is 0-based
+    if (month >= 2 && month <= 5) {
+      return "CHAITRA";
+    }
+    if (month >= 9 && month <= 11) {
+      return "SHARDIYA";
+    }
+    return "SHARDIYA"; // default fallback
+  };
+
+  const importSelectedBookings = async () => {
+    setIsImporting(true);
+    const currentYear = new Date().getFullYear();
+    const currentSeason = getSeason();
+
+    const bookingsToImport = bookings.filter((b) =>
+      selectedBookings.includes(b._id || b.id)
+    );
+
+    if (bookingsToImport.length === 0) {
+      toast({
+        title: "No Bookings Selected",
+        description: "Please select at least one booking to import.",
+      });
+      setIsImporting(false);
+      return;
+    }
+
+    let successCount = 0;
+    let failCount = 0;
+
+    for (const booking of bookingsToImport) {
+      const payload = {
+        name: booking.name,
+        contactNumber: booking.contactNumber,
+        address: booking.address,
+        whatsappNumber: booking.whatsappNumber,
+        diyaType: booking.diyaType,
+        paymentStatus: "PENDING",
+        year: currentYear,
+        season: currentSeason,
+      };
+
+      try {
+        const response = await fetch(
+          "https://siddhbabatemplebackend.onrender.com/api/bookings",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          }
+        );
+
+        if (response.ok) {
+          successCount++;
+        } else {
+          failCount++;
+        }
+      } catch (error) {
+        failCount++;
+      }
+    }
+
+    toast({
+      title: "Import Complete",
+      description: `${successCount} bookings imported successfully. ${failCount} failed.`,
+    });
+
+    // Re-fetch bookings to show the new ones
+    const fetchDevotees = async () => {
+      const res = await fetch(
+        "https://siddhbabatemplebackend.onrender.com/api/bookings"
+      );
+      const data = await res.json();
+      if (Array.isArray(data)) {
+        setBookings(data);
+      }
+    };
+    fetchDevotees();
+    setYear(String(currentYear));
+    setSelectedBookings([]);
+    setIsImporting(false);
   };
 
   // ✅ Filter
@@ -305,6 +429,46 @@ export default function AdminPanel() {
       </div>
 
       <div className="flex justify-center md:justify-end gap-2 mb-4 lg:mx-10">
+        <AlertDialog>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    disabled={isImporting || selectedBookings.length === 0}
+                    className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white px-5 py-2.5 rounded-lg shadow-md transition-all duration-200"
+                  >
+                    {isImporting
+                      ? "Importing..."
+                      : `Import Selected (${selectedBookings.length})`}
+                  </Button>
+                </AlertDialogTrigger>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>
+                  Copies selected bookings to the current year with "Pending"
+                  status.
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This will import {selectedBookings.length} selected bookings to
+                the current year ({new Date().getFullYear()}). This action cannot
+                be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={importSelectedBookings}>
+                Confirm Import
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
         <Button
           onClick={exportToExcel}
           className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-5 py-2.5 rounded-lg shadow-md transition-all duration-200"
@@ -318,6 +482,15 @@ export default function AdminPanel() {
         <table className="min-w-full text-left border-collapse">
           <thead className="bg-orange-100 text-gray-700">
             <tr>
+              <th className="p-4 w-10 border-r">
+                <Checkbox
+                  checked={
+                    selectedBookings.length === filtered.length &&
+                    filtered.length > 0
+                  }
+                  onCheckedChange={handleSelectAll}
+                />
+              </th>
               <th className="p-4 w-10 border-r">No.</th>
               <th className="p-4 px-6 min-w-36">Name</th>
               <th className="p-4">Address</th>
@@ -331,7 +504,7 @@ export default function AdminPanel() {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan={8} className="p-4 text-center text-gray-500">
+                <td colSpan={9} className="p-4 text-center text-gray-500">
                   <div className="grid gap-4 p-2">
                     {Array.from({ length: 7 }).map((_, i) => (
                       <div
@@ -345,7 +518,7 @@ export default function AdminPanel() {
             ) : filtered.length === 0 ? (
               <tr>
                 <td
-                  colSpan={8}
+                  colSpan={9}
                   className="p-4 text-center text-xl text-gray-500"
                 >
                   No bookings found.
@@ -357,6 +530,12 @@ export default function AdminPanel() {
                   key={b._id || b.id}
                   className="border-b hover:bg-orange-50 transition-colors"
                 >
+                  <td className="p-4 border-x text-center">
+                    <Checkbox
+                      checked={selectedBookings.includes(b._id || b.id)}
+                      onCheckedChange={() => handleSelectBooking(b._id || b.id)}
+                    />
+                  </td>
                   <td className="p-4 border-x text-center">{index + 1}.</td>
                   <td className="p-4 px-6 font-medium">{b.name}</td>
                   <td className="p-4">{b.address}</td>
