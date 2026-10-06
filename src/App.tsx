@@ -13,6 +13,8 @@ import Donations from "./pages/Donations";
 import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/AdminLogin";
 import AdminPanel from "./pages/AdminPanel";
+import AdminDonations from "./pages/AdminDonations.tsx";
+import Expenses from "./pages/Expenses.tsx";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +46,8 @@ const App = () => (
           <Route path="/donations" element={<Donations />} />
           <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/admin-dashboard" element={<AdminPanel />} />
+          <Route path="/admin-donations" element={<AdminDonations />} />
+          <Route path="/admin-expenses" element={<Expenses />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

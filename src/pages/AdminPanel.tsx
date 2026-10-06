@@ -23,9 +23,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Flame, Search, LogOut } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import AdminNavbar from "@/components/AdminNavbar";
 
 import * as XLSX from "xlsx-js-style";
 import { saveAs } from "file-saver";
@@ -144,12 +144,6 @@ export default function AdminPanel() {
       console.error("Error deleting booking:", err);
       alert("Failed to delete booking. Please try again.");
     }
-  };
-
-  // ✅ Logout Function
-  const handleLogout = () => {
-    localStorage.removeItem("adminToken");
-    navigate("/admin-login");
   };
 
   const handleSelectBooking = (id: string) => {
@@ -348,48 +342,8 @@ export default function AdminPanel() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-r from-orange-50 via-pink-50 to-purple-50 mt-14 p-4 px-0">
-      {/* Header */}
-      <div className="flex items-center justify-between bg-white mb-6 px-4 lg:px-10 gap-3 fixed top-0 w-full z-10 border-b border-border/50 py-2">
-        <Link
-          to="/"
-          className="flex items-center gap-3 hover:opacity-80 transition-opacity"
-        >
-          <div className="p-2 bg-gradient-primary rounded-lg shadow-temple hover:shadow-diya transition-all duration-300">
-            <Flame className="h-6 w-6 text-white" />
-          </div>
-          <div>
-            <h1 className="rozha-one-regular font-display font-bold text-lg text-foreground">
-              श्री सिद्ध बाबा धाम
-            </h1>
-            <p className="text-xs text-muted-foreground">पावन मंदिर, मड़ेली</p>
-          </div>
-        </Link>
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <Button className="flex items-center gap-2 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-5 py-2.5 rounded-lg shadow-md transition-all duration-200 ease-in-out hover:shadow-lg active:scale-95">
-              <LogOut size={18} className="shrink-0" />
-              <span className="hidden sm:inline font-medium tracking-wide">
-                Logout
-              </span>
-            </Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-              <AlertDialogDescription>
-                This will log you out from the Admin panel.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={handleLogout}>
-                Logout
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      </div>
+    <div className="min-h-screen w-full bg-gradient-to-r from-orange-50 via-pink-50 to-purple-50 p-4 px-0">
+      <AdminNavbar />
 
       <h1 className="p-4 text-2xl sm:text-3xl font-bold text-gray-800 text-center">
         Admin Dashboard - Diya Bookings

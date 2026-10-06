@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import noUser from "@/assets/no-user.jpg";
 import hitesh from "@/assets/hitesh-patel.png"
+import prakash from "@/assets/prakash-dhruw.jpeg"
+
 
 interface Member {
   name: string;
@@ -38,8 +40,14 @@ const members: Member[] = [
   {
     name: "Purushottam Kansari",
     position: "Sahsachiv",
-    mobile: "XXXXXXXXXX",
+    mobile: "**********",
     image: noUser,
+  },
+  {
+    name: "Prakash Kumar Dhruw",
+    position: "Sadasya",
+    mobile: "7489206045",
+    image: prakash,
   },
 ];
 
