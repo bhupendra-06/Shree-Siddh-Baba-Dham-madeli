@@ -5,7 +5,7 @@ import AdminNavbar from "@/components/AdminNavbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, X } from "lucide-react";
+import { MessageCircle, Phone, Plus, X } from "lucide-react";
 
 interface Donation {
   _id?: string;
@@ -21,6 +21,10 @@ const formatAmount = (amount: number) =>
   new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(
     amount,
   );
+const getWhatsAppNumber = (contactNumber: string) => {
+  const digits = contactNumber.replace(/\D/g, "");
+  return digits.length === 10 ? `91${digits}` : digits;
+};
 
 const AdminDonations = () => {
   const navigate = useNavigate();
@@ -254,7 +258,27 @@ const AdminDonations = () => {
                     className="border-t even:bg-orange-50/60"
                   >
                     <td className="p-4 font-medium">{donation.donorName}</td>
-                    <td className="p-4">{donation.contactNumber}</td>
+                    <td className="p-4">
+                      <div className="flex items-center gap-2">
+                        <a
+                          href={`tel:${donation.contactNumber}`}
+                          className="whitespace-nowrap text-foreground hover:text-primary hover:underline"
+                          aria-label={`Call ${donation.donorName} at ${donation.contactNumber}`}
+                        >
+                          {donation.contactNumber}
+                        </a>
+                        <a
+                          href={`https://wa.me/${getWhatsAppNumber(donation.contactNumber)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-green-700 transition-colors hover:bg-green-50 hover:text-green-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600"
+                          aria-label={`Message ${donation.donorName} on WhatsApp`}
+                          title="Message on WhatsApp"
+                        >
+                          <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                        </a>
+                      </div>
+                    </td>
                     <td className="p-4">{donation.purpose}</td>
                     <td className="p-4 text-right font-semibold">
                       {formatAmount(donation.amount)}
