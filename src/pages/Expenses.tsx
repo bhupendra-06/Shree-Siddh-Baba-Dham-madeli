@@ -5,7 +5,26 @@ import AdminNavbar from "@/components/AdminNavbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Download, Plus, X } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Download, Pencil, Plus, Trash2, X } from "lucide-react";
 import * as XLSX from "xlsx-js-style";
 import { saveAs } from "file-saver";
 
@@ -41,6 +60,14 @@ const Expenses = () => {
   const [formMessage, setFormMessage] = useState("");
   const [formOpen, setFormOpen] = useState(false);
   const [selectedYear, setSelectedYear] = useState("all");
+  const [editingExpense, setEditingExpense] = useState<Expense | null>(null);
+  const [editValues, setEditValues] = useState({
+    title: "",
+    amount: "",
+    description: "",
+  });
+  const [isSavingEdit, setIsSavingEdit] = useState(false);
+  const [actionMessage, setActionMessage] = useState("");
 
   useEffect(() => {
     if (!localStorage.getItem("adminToken")) {
@@ -110,6 +137,69 @@ const Expenses = () => {
       );
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const openEditExpense = (expense: Expense) => {
+    setEditingExpense(expense);
+    setEditValues({
+      title: expense.title,
+      amount: String(expense.amount),
+      description: expense.description,
+    });
+    setActionMessage("");
+  };
+
+  const saveExpenseEdit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const id = editingExpense?._id ?? editingExpense?.id;
+    if (!id) return;
+    setIsSavingEdit(true);
+    setActionMessage("");
+    const payload = {
+      title: editValues.title.trim(),
+      amount: Number(editValues.amount),
+      description: editValues.description.trim(),
+    };
+
+    try {
+      const response = await fetch(`${API_BASE}/expenses/${encodeURIComponent(id)}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!response.ok) {
+        const details = await response.text();
+        throw new Error(details || "Unable to update expense.");
+      }
+      setExpenses((current) => current.map((expense) =>
+        (expense._id ?? expense.id) === id ? { ...expense, ...payload } : expense,
+      ));
+      setEditingExpense(null);
+      setActionMessage("Expense updated successfully.");
+    } catch (updateError) {
+      setActionMessage(updateError instanceof Error ? updateError.message : "Unable to update expense.");
+    } finally {
+      setIsSavingEdit(false);
+    }
+  };
+
+  const deleteExpense = async (expense: Expense) => {
+    const id = expense._id ?? expense.id;
+    if (!id) return;
+    setActionMessage("");
+    try {
+      const response = await fetch(`${API_BASE}/expenses/${encodeURIComponent(id)}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        const details = await response.text();
+        throw new Error(details || "Unable to delete expense.");
+      }
+      setExpenses((current) => current.filter((item) => (item._id ?? item.id) !== id));
+      setActionMessage("Expense deleted successfully.");
+    } catch (deleteError) {
+      setActionMessage(deleteError instanceof Error ? deleteError.message : "Unable to delete expense.");
     }
   };
 
@@ -267,6 +357,11 @@ const Expenses = () => {
             {formMessage}
           </p>
         )}
+        {actionMessage && (
+          <p role="status" className="mb-3 text-sm text-muted-foreground">
+            {actionMessage}
+          </p>
+        )}
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border bg-white px-4 py-3 shadow-sm">
           <label htmlFor="expense-year" className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
             Year
@@ -305,13 +400,14 @@ const Expenses = () => {
                 <th className="p-4">Description</th>
                 <th className="p-4">Date</th>
                 <th className="p-4 text-right">Amount</th>
+                <th className="p-4 text-right">Actions</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
                 <tr>
                   <td
-                    colSpan={4}
+                    colSpan={5}
                     className="p-6 text-center text-muted-foreground"
                   >
                     Loading expenses…
@@ -319,14 +415,14 @@ const Expenses = () => {
                 </tr>
               ) : error ? (
                 <tr>
-                  <td colSpan={4} className="p-6 text-center text-red-600">
+                  <td colSpan={5} className="p-6 text-center text-red-600">
                     {error}
                   </td>
                 </tr>
               ) : filteredExpenses.length === 0 ? (
                 <tr>
                   <td
-                    colSpan={4}
+                    colSpan={5}
                     className="p-6 text-center text-muted-foreground"
                   >
                     No expense records found for this year.
@@ -348,12 +444,106 @@ const Expenses = () => {
                     <td className="p-4 text-right font-semibold">
                       {formatAmount(expense.amount)}
                     </td>
+                    <td className="p-3">
+                      <div className="flex justify-end gap-1">
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          title="Edit expense"
+                          aria-label={`Edit expense: ${expense.title}`}
+                          disabled={!(expense._id ?? expense.id)}
+                          onClick={() => openEditExpense(expense)}
+                        >
+                          <Pencil aria-hidden="true" />
+                        </Button>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              title="Delete expense"
+                              aria-label={`Delete expense: ${expense.title}`}
+                              disabled={!(expense._id ?? expense.id)}
+                              className="text-red-600 hover:bg-red-50 hover:text-red-700"
+                            >
+                              <Trash2 aria-hidden="true" />
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>Delete expense?</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                This will permanently delete “{expense.title}”.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogAction
+                                onClick={() => deleteExpense(expense)}
+                                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                              >
+                                Delete
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </div>
+                    </td>
                   </tr>
                 ))
               )}
             </tbody>
           </table>
         </Card>
+        <Dialog
+          open={Boolean(editingExpense)}
+          onOpenChange={(open) => !open && setEditingExpense(null)}
+        >
+          <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
+            <DialogHeader>
+              <DialogTitle>Edit expense</DialogTitle>
+              <DialogDescription>Update the expense details below.</DialogDescription>
+            </DialogHeader>
+            <form onSubmit={saveExpenseEdit} className="grid gap-4">
+              <label className="grid gap-1.5 text-sm font-medium">
+                Title
+                <Input
+                  value={editValues.title}
+                  onChange={(event) => setEditValues({ ...editValues, title: event.target.value })}
+                  required
+                  maxLength={120}
+                />
+              </label>
+              <label className="grid gap-1.5 text-sm font-medium">
+                Amount (INR)
+                <Input
+                  type="number"
+                  min="0.01"
+                  step="0.01"
+                  value={editValues.amount}
+                  onChange={(event) => setEditValues({ ...editValues, amount: event.target.value })}
+                  required
+                />
+              </label>
+              <label className="grid gap-1.5 text-sm font-medium">
+                Description
+                <Textarea
+                  value={editValues.description}
+                  onChange={(event) => setEditValues({ ...editValues, description: event.target.value })}
+                  required
+                  maxLength={1000}
+                />
+              </label>
+              <DialogFooter>
+                <Button type="submit" disabled={isSavingEdit}>
+                  {isSavingEdit ? "Saving..." : "Save changes"}
+                </Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
       </main>
     </div>
   );

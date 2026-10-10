@@ -5,7 +5,26 @@ import AdminNavbar from "@/components/AdminNavbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Download, MessageCircle, Plus, X } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Download, MessageCircle, Pencil, Plus, Trash2, X } from "lucide-react";
 import * as XLSX from "xlsx-js-style";
 import { saveAs } from "file-saver";
 
@@ -46,6 +65,15 @@ const AdminDonations = () => {
   const [formMessage, setFormMessage] = useState("");
   const [formOpen, setFormOpen] = useState(false);
   const [selectedYear, setSelectedYear] = useState("all");
+  const [editingDonation, setEditingDonation] = useState<Donation | null>(null);
+  const [editValues, setEditValues] = useState({
+    donorName: "",
+    contactNumber: "",
+    amount: "",
+    purpose: "",
+  });
+  const [isSavingEdit, setIsSavingEdit] = useState(false);
+  const [actionMessage, setActionMessage] = useState("");
 
   useEffect(() => {
     if (!localStorage.getItem("adminToken")) {
@@ -116,6 +144,71 @@ const AdminDonations = () => {
       );
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const openEditDonation = (donation: Donation) => {
+    setEditingDonation(donation);
+    setEditValues({
+      donorName: donation.donorName,
+      contactNumber: donation.contactNumber,
+      amount: String(donation.amount),
+      purpose: donation.purpose,
+    });
+    setActionMessage("");
+  };
+
+  const saveDonationEdit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const id = editingDonation?._id ?? editingDonation?.id;
+    if (!id) return;
+    setIsSavingEdit(true);
+    setActionMessage("");
+    const payload = {
+      donorName: editValues.donorName.trim(),
+      contactNumber: editValues.contactNumber.trim(),
+      amount: Number(editValues.amount),
+      purpose: editValues.purpose.trim(),
+    };
+
+    try {
+      const response = await fetch(`${API_BASE}/donations/${encodeURIComponent(id)}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!response.ok) {
+        const details = await response.text();
+        throw new Error(details || "Unable to update donation.");
+      }
+      setDonations((current) => current.map((donation) =>
+        (donation._id ?? donation.id) === id ? { ...donation, ...payload } : donation,
+      ));
+      setEditingDonation(null);
+      setActionMessage("Donation updated successfully.");
+    } catch (updateError) {
+      setActionMessage(updateError instanceof Error ? updateError.message : "Unable to update donation.");
+    } finally {
+      setIsSavingEdit(false);
+    }
+  };
+
+  const deleteDonation = async (donation: Donation) => {
+    const id = donation._id ?? donation.id;
+    if (!id) return;
+    setActionMessage("");
+    try {
+      const response = await fetch(`${API_BASE}/donations/${encodeURIComponent(id)}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        const details = await response.text();
+        throw new Error(details || "Unable to delete donation.");
+      }
+      setDonations((current) => current.filter((item) => (item._id ?? item.id) !== id));
+      setActionMessage("Donation deleted successfully.");
+    } catch (deleteError) {
+      setActionMessage(deleteError instanceof Error ? deleteError.message : "Unable to delete donation.");
     }
   };
 
@@ -288,6 +381,11 @@ const AdminDonations = () => {
             {formMessage}
           </p>
         )}
+        {actionMessage && (
+          <p role="status" className="mb-3 text-sm text-muted-foreground">
+            {actionMessage}
+          </p>
+        )}
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border bg-white px-4 py-3 shadow-sm">
           <label htmlFor="donation-year" className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
             Year
@@ -327,13 +425,14 @@ const AdminDonations = () => {
                 <th className="p-4">Purpose</th>
                 <th className="p-4">Date</th>
                 <th className="p-4 text-right">Amount</th>
+                <th className="p-4 text-right">Actions</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
                 <tr>
                   <td
-                    colSpan={5}
+                    colSpan={6}
                     className="p-6 text-center text-muted-foreground"
                   >
                     Loading donations…
@@ -341,14 +440,14 @@ const AdminDonations = () => {
                 </tr>
               ) : error ? (
                 <tr>
-                  <td colSpan={5} className="p-6 text-center text-red-600">
+                  <td colSpan={6} className="p-6 text-center text-red-600">
                     {error}
                   </td>
                 </tr>
               ) : filteredDonations.length === 0 ? (
                 <tr>
                   <td
-                    colSpan={5}
+                    colSpan={6}
                     className="p-6 text-center text-muted-foreground"
                   >
                     No donation records found for this year.
@@ -393,12 +492,117 @@ const AdminDonations = () => {
                     <td className="p-4 text-right font-semibold">
                       {formatAmount(donation.amount)}
                     </td>
+                    <td className="p-3">
+                      <div className="flex justify-end gap-1">
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          title="Edit donation"
+                          aria-label={`Edit donation from ${donation.donorName}`}
+                          disabled={!(donation._id ?? donation.id)}
+                          onClick={() => openEditDonation(donation)}
+                        >
+                          <Pencil aria-hidden="true" />
+                        </Button>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              title="Delete donation"
+                              aria-label={`Delete donation from ${donation.donorName}`}
+                              disabled={!(donation._id ?? donation.id)}
+                              className="text-red-600 hover:bg-red-50 hover:text-red-700"
+                            >
+                              <Trash2 aria-hidden="true" />
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>Delete donation?</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                This will permanently delete the donation from {donation.donorName}.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogAction
+                                onClick={() => deleteDonation(donation)}
+                                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                              >
+                                Delete
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </div>
+                    </td>
                   </tr>
                 ))
               )}
             </tbody>
           </table>
         </Card>
+        <Dialog
+          open={Boolean(editingDonation)}
+          onOpenChange={(open) => !open && setEditingDonation(null)}
+        >
+          <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
+            <DialogHeader>
+              <DialogTitle>Edit donation</DialogTitle>
+              <DialogDescription>Update the donation details below.</DialogDescription>
+            </DialogHeader>
+            <form onSubmit={saveDonationEdit} className="grid gap-4">
+              <label className="grid gap-1.5 text-sm font-medium">
+                Donor name
+                <Input
+                  value={editValues.donorName}
+                  onChange={(event) => setEditValues({ ...editValues, donorName: event.target.value })}
+                  required
+                  maxLength={120}
+                />
+              </label>
+              <label className="grid gap-1.5 text-sm font-medium">
+                Contact number
+                <Input
+                  type="tel"
+                  inputMode="numeric"
+                  value={editValues.contactNumber}
+                  onChange={(event) => setEditValues({ ...editValues, contactNumber: event.target.value })}
+                  required
+                  maxLength={20}
+                />
+              </label>
+              <label className="grid gap-1.5 text-sm font-medium">
+                Amount (INR)
+                <Input
+                  type="number"
+                  min="0.01"
+                  step="0.01"
+                  value={editValues.amount}
+                  onChange={(event) => setEditValues({ ...editValues, amount: event.target.value })}
+                  required
+                />
+              </label>
+              <label className="grid gap-1.5 text-sm font-medium">
+                Purpose
+                <Textarea
+                  value={editValues.purpose}
+                  onChange={(event) => setEditValues({ ...editValues, purpose: event.target.value })}
+                  required
+                  maxLength={500}
+                />
+              </label>
+              <DialogFooter>
+                <Button type="submit" disabled={isSavingEdit}>
+                  {isSavingEdit ? "Saving..." : "Save changes"}
+                </Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
       </main>
     </div>
   );
